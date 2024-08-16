@@ -20,7 +20,7 @@ export default async function orderHandler(req: NextApiRequest, res: NextApiResp
       // Check if user already exists
       const existingUser = await collection.findOne({ $or: [{ email }, { phone }] });
       if (existingUser) {
-        res.status(200).json({ message: 'User Exists' });
+        res.status(404).json({ message: 'User Exists' });
       } else {
         // Encrypt the password
         const salt = bcrypt.genSaltSync(10);

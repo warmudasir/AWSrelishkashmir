@@ -3,14 +3,14 @@ import nodemailer from 'nodemailer';
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: 'your email here', // Your email address
-    pass: 'you app password', // Your app password
+    user: 'ss@gmail.com', // Your email address
+    pass: 'pp', // Your app password
   },
 });
 
 export const sendOrderConfirmationEmail = async (to, orderDetails) => {
   const mailOptions = {
-    from: 'your email here',
+    from: 'warmudasir095@gmail.com',
     to,
     subject: 'Order Confirmation',
     text: `Thank you for your order! Here are your order details:\n\n${JSON.stringify(orderDetails, null, 2)}`,

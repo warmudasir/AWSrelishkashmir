@@ -41,12 +41,12 @@ const Products = () => {
       try {
         const response = await fetch("/api/myorders");
         if (!response.ok) {
-          throw new Error("Failed to fetch products");
+          throw new Error("Failed to fetch orders");
         }
         const result = await response.json();
         setOrders(result);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Error fetching orders:", error);
       } finally {
         setIsLoading(false);
       }
@@ -64,7 +64,6 @@ const Products = () => {
 
   const handleStatusSubmit = async (orderId: string) => {
     try {
-      console.log(orderId);
       const updatedOrder = {
         orderStatus: statusUpdate[orderId],
       };
@@ -112,59 +111,61 @@ const Products = () => {
       <Header />
       <div className="orders-container">
         {userData?.email ? (
-          orders.map((order) => (
-            <div className="order-card" key={order.orderId}>
-              <Image
-                src={order.imageUrl}
-                alt="Product Image"
-                width={200}
-                height={200}
-                className="product-image"
-              />
+          [...orders] // Create a shallow copy of the array
+            .reverse() // Reverse the array
+            .map((order) => (
+              <div className="order-card" key={order.orderId}>
+                <Image
+                  src={order.imageUrl}
+                  alt="Product Image"
+                  width={200}
+                  height={200}
+                  className="product-image"
+                />
 
-              <div className="order-details">
-                <h2>Order Details</h2>
-                <h3>Product Name: {order.productname}</h3>
-                <p>Total Quantity: {order.quantity}</p>
-                <p>Unit Price: ₹{order.productprice}</p>
-                <p>Total Order Price: ₹{order.productprice * order.quantity}</p>
+                <div className="order-details">
+                  <h2>Order Details</h2>
+                  <h3>Product Name: {order.productname}</h3>
+                  <p>Total Quantity: {order.quantity}</p>
+                  <p>Unit Price: ₹{order.productprice}</p>
+                  <p>Total Order Price: ₹{order.productprice * order.quantity}</p>
 
-                <h2>Address Details</h2>
-                <p>Name: {order.firstName}</p>
-                <p>Address: {order.address}</p>
-                <p>Pincode: {order.pincode}</p>
-                <p>Phone Number: {order.phone}</p>
+                  <h2>Address Details</h2>
+                  <p>Name: {order.firstName}</p>
+                  <p>Address: {order.address}</p>
+                  <p>Pincode: {order.pincode}</p>
+                  <p>Phone Number: {order.phone}</p>
+                </div>
+
+                <div className="order-status">
+                  <h2>Order Status</h2>
+                  {order.orderStatus === "Delivered" ? (
+                    <p>Delivered</p>
+                  ) : (
+                    <>
+                      <select
+                        value={statusUpdate[order.orderId] || order.orderStatus}
+                        onChange={(e) =>
+                          handleStatusChange(order.orderId, e.target.value)
+                        }
+                      >
+                        <option value="Item Dispatched">Item Dispatched</option>
+                        <option value="In transit">In transit</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Delivery attempt failed">
+                          Delivery attempt failed
+                        </option>
+                      </select>
+                      {order.orderStatus !== "Delivered" && (
+                        <button onClick={() => handleStatusSubmit(order.orderId)}>
+                          Submit
+                        </button>
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
-
-              <div className="order-status">
-                <h2>Order Status</h2>
-                {order.orderStatus === "Delivered" ? (
-                  <p>Delivered</p>
-                ) : (
-                  <>
-                    <select
-                      value={statusUpdate[order.orderId] || order.orderStatus}
-                      onChange={(e) =>
-                        handleStatusChange(order.orderId, e.target.value)
-                      }
-                    >
-                      <option value="Item Dispatched">Item Dispatched</option>
-                      <option value="In transit">In transit</option>
-                      <option value="Delivered">Delivered</option>
-                      <option value="Delivery attempt failed">
-                        Delivery attempt failed
-                      </option>
-                    </select>
-                    {order.orderStatus !== "Delivered" && (
-                      <button onClick={() => handleStatusSubmit(order.orderId)}>
-                        Submit
-                      </button>
-                    )}
-                  </>
-                )}
-              </div>
-            </div>
-          ))
+            ))
         ) : (
           <div className="login-message">
             <h2>Please log in first to check your orders</h2>

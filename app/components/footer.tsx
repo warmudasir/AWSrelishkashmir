@@ -55,7 +55,8 @@ const Footer = () => {
       </div>
       <div className={styles.footerBottom}>
         <p>Proprietor: Shayeeb Mohammad War</p>
-        <h1>&copy; All rights reserved 2023-24</h1>
+        <h1>&copy; All rights reserved 2023-24</h1><br />
+        <p><i>Designed and Developed by :  Mohammad Mudasir  : warmudasir095@gmail.com</i></p>
       </div>
     </div>
   );

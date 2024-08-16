@@ -1,8 +1,6 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import jwt from 'jsonwebtoken';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import Image from 'next/image';
@@ -17,10 +15,11 @@ interface Product {
   productname: string;
   quantity: number;
   productprice: number;
+  orderStatus: string; // Ensure this field is included in your Product interface
 }
 
+
 const Products = () => {
-  const SECRET_KEY = process.env.SECRET_KEY || 'hello123';
   const [orders, setOrders] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const userData = getUserToken();
@@ -30,20 +29,20 @@ const Products = () => {
       try {
         const response = await fetch('/api/myorders');
         if (!response.ok) {
-          throw new Error('Failed to fetch products');
+          throw new Error('Failed to fetch orders');
         }
         const result = await response.json();
         const filteredOrders = result.filter(order => order.email === userData.email);
         setOrders(filteredOrders);
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error('Error fetching orders:', error);
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [userData?.email]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -66,28 +65,31 @@ const Products = () => {
       <Header />
       <div className="orders-container">
         {userData?.email ? (
-          orders.map((order) => (
-            <div className="order-card" key={order._id}>
-              <Image
-                src={order.imageUrl}
-                alt="Product Image"
-                width={200}
-                height={200}
-                className="product-image"
-              />
+          orders
+            .slice() // Create a shallow copy of the array
+            .reverse() // Reverse the array
+            .map((order) => (
+              <div className="order-card" key={order._id}>
+                <Image
+                  src={order.imageUrl}
+                  alt="Product Image"
+                  width={200}
+                  height={200}
+                  className="product-image"
+                />
 
-              <div className="order-details">
-                <h2>Order Details</h2>
-                <h3>Product Name: {order.productname}</h3>
-                <p>Total Quantity: {order.quantity}</p>
-                <p>Total Payable: ₹{order.productprice * order.quantity}</p>
-                <p>Description: Healthy and pure saffron from Kashmir. Enjoy the best taste and aroma.</p>
+                <div className="order-details">
+                  <h2>Order Details</h2>
+                  <h3>Product Name: {order.productname}</h3>
+                  <p>Total Quantity: {order.quantity}</p>
+                  <p>Total Payable: ₹{order.productprice * order.quantity}</p>
+                  <p>Description: Healthy and pure saffron from Kashmir. Enjoy the best taste and aroma.</p>
+                </div>
+                <div className="order-status">
+                  <h2>Order Status: <span>{order.orderStatus}</span></h2>
+                </div>
               </div>
-              <div className="order-status">
-                <h2>Order Status: <span>{order.orderStatus}</span></h2>
-              </div>
-            </div>
-          ))
+            ))
         ) : (
           <div className="login-message">
             <h2>Please log in first to check your orders</h2>

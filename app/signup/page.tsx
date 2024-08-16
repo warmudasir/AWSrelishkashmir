@@ -28,7 +28,7 @@ const SignupPage = () => {
     if (response.ok) {
       router.push("/login");
     } else {
-      console.error("Failed to submit form");
+      alert(result.message);
     }
   };
 

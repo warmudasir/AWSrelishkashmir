@@ -42,6 +42,11 @@ const validateLogin = async (data: IFormInput, router: any, setError: (message: 
       localStorage.setItem('token', token);
       router.push('/');
     }
+    else if(decoded.role==='deliveryagent')
+    {
+      localStorage.setItem('token', token);
+      router.push('/deliveryagent');
+    }
   } catch (error) {
     setError('Invalid login credentials');
     console.error('Error:', error);
