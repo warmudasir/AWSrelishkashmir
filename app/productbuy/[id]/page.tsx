@@ -66,9 +66,7 @@ const Page = ({ params }: { params: { id: string } }) => {
         description: "Sample Product",
         order_id: orderData.id,
         handler: async function (response: any) {
-          alert("Payment successful");
-
-          const orderResponse = await fetch("/api/orderdata", {
+              const orderResponse = await fetch("/api/orderdata", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -80,6 +78,7 @@ const Page = ({ params }: { params: { id: string } }) => {
               signature: response.razorpay_signature,
             }),
           });
+          router.push(`/sucessorder?orderId=${response.razorpay_order_id}`);
         },
         prefill: {
           name: orderInfo.firstName + " " + orderInfo.lastName,

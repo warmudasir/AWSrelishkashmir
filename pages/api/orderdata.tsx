@@ -28,6 +28,7 @@ export default async function orderHandler(
         productprice,
         imageUrl,
         orderStatus,
+        orderId
       } = req.body;
 
       const collection = db.collection("orders");
@@ -65,6 +66,7 @@ export default async function orderHandler(
         productprice,
         imageUrl,
         orderStatus,
+        orderId
       });
       await sendOrderConfirmationEmail(email, {
         productname,

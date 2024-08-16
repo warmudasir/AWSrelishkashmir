@@ -18,8 +18,16 @@ export default function Home() {
   const [imageUrl, setImageUrl] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  if (userData === null || userData.role === "user") {
-    router.push("/");
+  if (userData === null || userData.role !="admin") {
+    if(userData.role==="deliveryagent")
+    {
+      router.push("/deliveryagent");
+    }
+    else
+    {
+      router.push("/");
+
+    }
   }
 
   const checkOrders = () => {

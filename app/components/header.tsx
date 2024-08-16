@@ -8,8 +8,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';  // Adjust the import path if necessary
 import { getUserToken } from "../utility/authtoken";
 import styles from './header.module.scss';
+import { useContext } from 'react';
+import { ProductContext } from '../context/productcontext';
 
 const Header = () => {
+  const cartitems=useContext(ProductContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
   const userData = getUserToken(); // This will determine if the user is logged in
@@ -37,6 +40,7 @@ const Header = () => {
             width={25}
             className={styles.showOnDesktop}
           />
+          <div className={styles.userName}><h2 >{cartitems}</h2></div>
           <Image
             src={userlogo}
             alt="User Logo"
