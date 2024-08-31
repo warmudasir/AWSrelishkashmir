@@ -1,18 +1,17 @@
 "use client";
 import React, { useState } from 'react';
 import Image from 'next/image';
-import logo3 from "../../images/logot.png";
-import cartlogo from "../../images/cartlogo.svg";
-import userlogo from "../../images/user-solid.svg";
+import logo3 from "../../../images/logot.png";
+import cartlogo from "../../../images/cartlogo.svg";
+import userlogo from "../../../images/user-solid.svg";
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';  // Adjust the import path if necessary
-import { getUserToken } from "../utility/authtoken";
+import { useRouter } from 'next/navigation';  
+import { getUserToken } from "../../utility/authtoken";
 import styles from './header.module.scss';
 import { useContext } from 'react';
-import { ProductContext } from '../context/productcontext';
+import { ProductContext } from '../../context/productcontext';
 
 const Header = () => {
-  const cartitems=useContext(ProductContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
   const userData = getUserToken(); // This will determine if the user is logged in
@@ -40,7 +39,6 @@ const Header = () => {
             width={25}
             className={styles.showOnDesktop}
           />
-          <div className={styles.userName}><h2 >{cartitems}</h2></div>
           <Image
             src={userlogo}
             alt="User Logo"
@@ -70,7 +68,6 @@ const Header = () => {
           <li><Link href="/myorders">My Orders</Link></li>
           {userData?.email ? (
             <>
-              {/* <li>{userData.email}</li> */}
               <li onClick={handleLogout}>Logout</li>
             </>
           ) : (
@@ -79,7 +76,7 @@ const Header = () => {
         </ul>
       </nav>
     </div>
-    <div style={{height:'50px'}}></div>
+    <div style={{height:'45px'}}></div>
     </>
   );
 };

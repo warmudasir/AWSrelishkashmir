@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import Footer from "@/app/components/footer";
-import Header from "@/app/components/header";
+import Footer from "@/app/components/footer/footer";
+import Header from "@/app/components/header/header";
 import styles from "./signup.module.scss";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";

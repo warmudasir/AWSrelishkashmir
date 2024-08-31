@@ -2,15 +2,19 @@
 
 import React from "react";
 import Image from "next/image";
-
-interface ProductType {
+// import s from "./product-card-module.scss"
+interface Product {
+  _id: string;
+  id: number;
   name: string;
-  price: number;
-  quantity: number;
-  imageUrl?: string;
+  description: string;
+  price?: string;
+  imageUrl: string;
+  availableQuantity: number;
+  quantity: number; // Adding this field for quantity management
 }
 
-const ProductCard = ({ product }: { product: ProductType }) => {
+const ProductCard = ({ product }: { product: Product }) => {
   const isOutOfStock = product.quantity === 0;
 
   const styles = {

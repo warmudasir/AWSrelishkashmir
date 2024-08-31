@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import ProductCard from "./productCard";
+import ProductCard from "./product-card/productCard";
 import styles from "./products.module.scss";
 import Link from "next/link";
 
@@ -44,6 +44,9 @@ const Products = () => {
   }
 
   return (
+    <>
+    <div style={{textAlign:"center",fontFamily:"sans-serif",fontSize:"20px"}}>Best of Jammu & Kashmir</div>
+    <div  style={{textAlign:"center",fontFamily:"sans-serif",fontSize:"20px"}}><h2>Explore Collections <span style={{color:"red",textDecoration:"underline"}}>Top Picks</span></h2></div>
     <div className={styles.body}>
       {products.map((product) => {
         const isOutOfStock = product.quantity === 0;
@@ -70,6 +73,7 @@ const Products = () => {
         );
       })}
     </div>
+    </>
   );
 };
 

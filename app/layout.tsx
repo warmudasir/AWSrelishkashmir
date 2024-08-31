@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Layout from "./components/layout";
-import Header from "./components/header";
-import footer from "./components/footer";
+import Header from "./components/header/header";
+import footer from "./components/footer/footer";
 import ProductContextProvider from "./context/productcontext";
+import styles from './styles/colors.module.scss';
 
 
 
@@ -26,7 +26,7 @@ export default function RootLayout({
       {/* <Layout> */}
       {/* <Header/> */}
       <ProductContextProvider>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className} style={{ backgroundColor: styles.backgroundColor, color: styles.textColor }}>{children}</body>
       </ProductContextProvider>
       <footer/>
       {/* </Layout> */}

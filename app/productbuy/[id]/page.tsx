@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Footer from "@/app/components/footer";
-import Header from "@/app/components/header";
+import Footer from "@/app/components/footer/footer";
+import Header from "@/app/components/header/header";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import styles from "./productbuy.module.scss";

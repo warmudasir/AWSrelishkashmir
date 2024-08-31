@@ -1,18 +1,20 @@
 "use client";
 
 import React, { useState } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../components/header/header';
+import Footer from '../components/footer/footer';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { getUserToken } from "../utility/authtoken";
 
 interface IFormInput {
   email: string;
   password: string;
 }
+
+type decodedType = string | JwtPayload;
 
 const validateLogin = async (data: IFormInput, router: any, setError: (message: string) => void) => {
   
@@ -32,8 +34,9 @@ const validateLogin = async (data: IFormInput, router: any, setError: (message: 
 
     const result = await response.json();
     const { token } = result;
-    const decoded = jwt.verify(token, SECRET_KEY);
+    const decoded: decodedType = jwt.verify(token, SECRET_KEY);
 
+  if (typeof decoded !== 'string' && decoded.role) {
     if (decoded.role === 'admin') {
       console.log('Login successful');
       localStorage.setItem('token', token);
@@ -41,12 +44,13 @@ const validateLogin = async (data: IFormInput, router: any, setError: (message: 
     } else if (decoded.role === 'user') {
       localStorage.setItem('token', token);
       router.push('/');
-    }
-    else if(decoded.role==='deliveryagent')
-    {
+    } else if (decoded.role === 'deliveryagent') {
       localStorage.setItem('token', token);
       router.push('/deliveryagent');
     }
+  } else {
+    throw new Error('Invalid token payload');
+  }
   } catch (error) {
     setError('Invalid login credentials');
     console.error('Error:', error);
