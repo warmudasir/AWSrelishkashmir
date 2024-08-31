@@ -1,15 +1,16 @@
 import React from 'react';
 import Image from 'next/image';
-import facebook from "../../images/facebook-brands-solid.svg";
-import instagram from "../../images/instagram-brands-solid.svg";
-import youtube from "../../images/youtube-brands-solid.svg";
+import facebook from "../../../images/facebook-brands-solid.svg";
+import instagram from "../../../images/instagram-brands-solid.svg";
+import youtube from "../../../images/youtube-brands-solid.svg";
 import styles from './footer.module.scss'; // Adjust the path as needed
+import Link from "next/link";
 
 const Footer = () => {
   return (
     <div className={styles.footerContainer}>
       <div className={styles.socialIcons}>
-        <Image src={instagram} alt="Instagram" width={40} />
+        <Link href="https://www.instagram.com/relish.kashmir/ " target='_blank'><Image src={instagram} alt="Instagram" width={40} /></Link>
         <Image src={facebook} alt="Facebook" width={40} />
         <Image src={youtube} alt="YouTube" width={40} />
       </div>

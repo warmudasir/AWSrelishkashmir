@@ -1,0 +1,16 @@
+// app/styles/colors.module.scss
+
+$primary-color: #FBE9D0;
+$secondary-color: black;
+$accent-color: #e74c3c;
+$text-color: #333;
+$background-color: #f5f5f5;
+
+// Export variables
+:export {
+  primaryColor: $primary-color;
+  secondaryColor: $secondary-color;
+  accentColor: $accent-color;
+  textColor: $text-color;
+  backgroundColor: $background-color;
+}

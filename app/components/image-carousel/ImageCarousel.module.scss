@@ -1,0 +1,77 @@
+/* components/ImageCarousel.module.scss */
+
+.carouselContainer {
+    position: relative;
+    width: 100%;
+    height: 500px; /* Default height for larger screens */
+    overflow: hidden;
+    background-color: black;
+    margin-top: 40px;
+  }
+  
+  .carouselImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .carouselImage.active {
+    opacity: 1;
+  }
+  
+  /* Navigation buttons */
+  .leftButton,
+  .rightButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 24px;
+    border-radius: 50%;
+  }
+  
+  .leftButton {
+    left: 10px;
+  }
+  
+  .rightButton {
+    right: 10px;
+  }
+  
+  .leftButton:hover,
+  .rightButton:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .carouselContainer {
+      height: 400px; /* Adjust height for mobile screens */
+    }
+    
+    .leftButton,
+    .rightButton {
+      padding: 5px;
+      font-size: 18px;
+    }
+  }
+  
+  @media (max-width:700px)
+  {
+    .carouselContainer {
+     
+      background-color: white;
+    }
+  }

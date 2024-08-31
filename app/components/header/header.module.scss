@@ -1,10 +1,12 @@
 /* header.module.scss */
+@import "../../styles/colors.module.scss";
 
 .header {
     position: fixed;
     width: 100%;
-    background-color: #FBE9D0;
+    background-color: $primary-color;
     z-index: 1000; /* Ensure the header is above other content */
+    top: 0px;
   }
   
   .topBar {
@@ -43,7 +45,7 @@
   }
   
   .hamburgerMenu .menuIcon div {
-    background-color: black;
+    background-color: $secondary-color;
     height: 3px;
     width: 30px;
     margin: 5px 0;
@@ -53,7 +55,7 @@
     display: none;
     width: 100%;
     text-align: center;
-    background-color: black; /* Set background color to black */
+    background-color: $secondary-color; /* Set background color to black */
   }
   
   .nav ul {
@@ -69,7 +71,7 @@
     min-width: 250px; /* Add a minimum width to prevent wrapping */
     padding: 15px 30px; /* Increase padding for more space between items */
     cursor: pointer;
-    background-color: black; /* Set background color to black */
+    background-color: $secondary-color; /* Set background color to black */
     color: white; /* Set text color to white for contrast */
     white-space: nowrap; /* Prevent text from wrapping */
   }

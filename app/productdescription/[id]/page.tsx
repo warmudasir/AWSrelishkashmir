@@ -2,12 +2,13 @@
 
 import React, { useContext, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Header from "@/app/components/header";
-import Footer from "@/app/components/footer";
-import ProductCard from "@/app/components/productCard";
-import Quantity from "@/app/components/quantity";
+import Header from "@/app/components/header/header";
+import Footer from "@/app/components/footer/footer";
+import ProductCard from "@/app/components/product-card/productCard";
+import Quantity from "@/app/components/product-quantity/quantity";
 import { getUserToken } from "@/app/utility/authtoken";
 import { ProductContext } from "@/app/context/productcontext";
+import styles from '../styles/colors.module.scss';
 
 interface Product {
   _id: string;
@@ -20,9 +21,21 @@ interface Product {
   quantity: number; // Adding this field for quantity management
 }
 
+interface Order {
+  itemNumber:string,
+  email:string
+}
+
+interface review{
+  comment:string;
+}
 interface Review {
+  review:review
   id: string; // Change to string to match product ID
   comment: string;
+  nameofreviewer?:string;
+  userType?:string
+
 }
 
 const ProductDescription = ({ params }: { params: { id: string } }) => {
@@ -126,20 +139,18 @@ const ProductDescription = ({ params }: { params: { id: string } }) => {
       return;
     }
 
-    const review: Review = {
+    const review:({id:string,comment:String}) = {
       id: id,
       comment: newReview,
     };
-    // console.log(user);
-    // Save the review (In a real-world application, you would post this to a backend)
-//
+
 try {
   const response = await fetch('/api/myorders');
   if (!response.ok) {
     throw new Error('Failed to fetch orders');
   }
   const result = await response.json();
-  const filteredOrders = result.filter(order => order.email === user.email && order.itemNumber === id);
+  const filteredOrders = result.filter((order: { email: string; itemNumber: string; }) => order.email === user.email && order.itemNumber === id);
   userType = filteredOrders.length === 0 ? "Unverified Purchase" : "Verified purchase";
   setTypeUser(userType);
 } catch (error) {
@@ -207,9 +218,9 @@ try {
             <button onClick={buyprod} className="buy-now-button">
               Buy Now
             </button>
-            <button onClick={handleAddToCart} className="add-to-cart-button">
+            {/* <button onClick={handleAddToCart} className="add-to-cart-button">
               Add to Cart
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
