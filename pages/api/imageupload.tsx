@@ -1,9 +1,9 @@
-// pages/api/imageupload.js
 import nextConnect from 'next-connect';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { MongoClient } from 'mongodb';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 const uri = 'mongodb://localhost:27017';
 const dbName = 'relishKashmir';
@@ -28,7 +28,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-const apiRoute = nextConnect({
+const apiRoute = nextConnect<NextApiRequest, NextApiResponse>({
   onError(error, req, res) {
     res.status(501).json({ error: `Sorry, something went wrong! ${error.message}` });
   },
@@ -39,14 +39,15 @@ const apiRoute = nextConnect({
 
 apiRoute.use(upload.single('file'));
 
-apiRoute.post(async (req, res) => {
-  const client = await new MongoClient(uri);
+apiRoute.post(async (req: NextApiRequest, res: NextApiResponse) => {
+  const client = new MongoClient(uri);
   await client.connect();
 
   const db = client.db(dbName);
   const collection = db.collection('items');
   const { name, description, price, quantity } = req.body;
-  const imageUrl = `/uploads/${req.file.filename}`;
+  const imageUrl = `/uploads/${req.file?.filename}`;
+
 
   try {
     // Check if a product with the same name already exists
@@ -66,7 +67,7 @@ apiRoute.post(async (req, res) => {
 
     await collection.insertOne(product);
     res.status(200).json({ imageUrl });
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({ error: `Failed to insert product: ${error.message}` });
   } finally {
     await client.close();

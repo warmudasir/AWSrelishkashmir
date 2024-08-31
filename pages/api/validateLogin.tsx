@@ -7,7 +7,7 @@ const SECRET_KEY = 'hello123';
 const uri = 'mongodb://localhost:27017';
 
 export default async function loginHandler(req: NextApiRequest, res: NextApiResponse) {
-  let client: MongoClient;
+  let client: MongoClient |null=null;
 
   if (req.method === 'POST') {
     const { email, password } = req.body;
@@ -50,7 +50,7 @@ export default async function loginHandler(req: NextApiRequest, res: NextApiResp
       console.error(error);
       res.status(500).json({ message: 'Internal Server Error' });
     } finally {
-      await client.close();
+      await client?.close();
     }
   } else {
     res.setHeader('Allow', ['POST']);

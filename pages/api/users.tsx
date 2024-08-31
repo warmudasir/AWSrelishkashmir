@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 const uri = 'mongodb://localhost:27017';
 
 export default async function orderHandler(req: NextApiRequest, res: NextApiResponse) {
-  let client: MongoClient;
+  let client: MongoClient| null=null;
 
   if (req.method === 'POST') {
     const { firstName, lastName, email, phone, password, role } = req.body;
@@ -41,7 +41,7 @@ export default async function orderHandler(req: NextApiRequest, res: NextApiResp
       console.error(error);
       res.status(500).json({ message: 'Internal Server Error' });
     } finally {
-      await client.close();
+      await client?.close();
     }
   } else {
     res.setHeader('Allow', ['POST']);

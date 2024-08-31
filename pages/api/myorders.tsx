@@ -5,7 +5,7 @@ const uri = 'mongodb://localhost:27017';
 const dbName = 'relishKashmir';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  let client: MongoClient;
+  let client: MongoClient |null=null;
 
   try {
     client = new MongoClient(uri);
