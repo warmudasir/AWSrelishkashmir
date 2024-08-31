@@ -1,15 +1,17 @@
-// import jwt from 'jsonwebtoken';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-const SECRET_KEY ='hello123';
 
-type userDataType={
+const SECRET_KEY = 'hello123';
+
+type userDataType = {
   firstName: string;
-  email:string;
-  lastname:string;
-  role:string;
-}
-type decodedType = string | JwtPayload;
-export const getUserToken = ():userDataType | decodedType | null => {
+  email: string;
+  lastname: string;
+  role: string;
+};
+
+type decodedType = string | JwtPayload | userDataType;
+
+export const getUserToken = (): userDataType | null => {
   const token = localStorage.getItem('token');
 
   if (!token) {
@@ -17,9 +19,14 @@ export const getUserToken = ():userDataType | decodedType | null => {
   }
 
   try {
-      const decoded = jwt.verify(token,SECRET_KEY);
+    const decoded = jwt.verify(token, SECRET_KEY);
 
-    return decoded;
+    // Type guard to narrow down the type
+    if (typeof decoded === 'object' && 'firstName' in decoded) {
+      return decoded as userDataType;
+    }
+
+    return null;
   } catch (err) {
     console.error('Token is invalid or expired', err);
     return null;

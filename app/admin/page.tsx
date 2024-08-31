@@ -19,7 +19,7 @@ export default function Home() {
   const [errorMessage, setErrorMessage] = useState("");
 
   if (userData === null || userData.role !="admin") {
-    if(userData.role==="deliveryagent")
+    if(userData && userData.role==="deliveryagent")
     {
       router.push("/deliveryagent");
     }
@@ -34,7 +34,7 @@ export default function Home() {
     router.push("/allorders");
   };
 
-  const addquantity = async (e) => {
+  const addquantity = async (e:any) => {
     e.preventDefault();
     try {
       const orderResponse = await fetch("/api/updatequantity", {
@@ -52,7 +52,7 @@ export default function Home() {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     if (!file) {
       alert("Please select a file to upload.");
@@ -143,7 +143,7 @@ export default function Home() {
               style={{ width: "100%", marginBottom: "10px" }}
             />
             <br />
-            <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+            <input type="file" onChange={(e:any) => setFile(e.target.files[0])} />
             <br />
             <button
               type="submit"
