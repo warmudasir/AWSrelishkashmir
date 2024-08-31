@@ -11,7 +11,7 @@ import { useSearchParams } from 'next/navigation';
 const OrderSuccessPage: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const orderId = searchParams.get('orderId');
+  const orderId = searchParams?.get('orderId');
   return (
     <>
       <Header />
