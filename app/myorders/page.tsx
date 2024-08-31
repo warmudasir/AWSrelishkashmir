@@ -24,6 +24,19 @@ const Products = () => {
   const [isLoading, setIsLoading] = useState(true);
   const userData = getUserToken();
 
+  type Order = {
+    email:string;
+    _id: string;
+    id: number;
+    Name: string;
+    price?: string;
+    imageUrl: string;
+    productname: string;
+    quantity: number;
+    productprice: number;
+    orderStatus: string;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,8 +44,8 @@ const Products = () => {
         if (!response.ok) {
           throw new Error('Failed to fetch orders');
         }
-        const result = await response.json();
-        const filteredOrders = result.filter(order => order.email === userData.email);
+        const result: Order[] = await response.json();
+        const filteredOrders = result.filter((order: Order) => userData?.email === order.email);
         setOrders(filteredOrders);
       } catch (error) {
         console.error('Error fetching orders:', error);
