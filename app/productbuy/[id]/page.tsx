@@ -7,14 +7,20 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, FieldValues, FieldErrors } from "react-hook-form";
 import styles from "./productbuy.module.scss";
 import { getUserToken } from "../../utility/authtoken";
+// global.d.ts
+
+interface Window {
+  Razorpay: any; // You can replace `any` with a more specific type if available
+}
+
 
 const Page = ({ params }: { params: { id: string } }) => {
   const userData = getUserToken();
   const { id } = params;
   const searchParams = useSearchParams();
-  const quantity = searchParams?.get("quantity") || 1;
   const name = searchParams?.get("name") || "Product Name";
-  const price = parseFloat(searchParams?.get("price") || "0.00");
+  const quantity = parseInt(searchParams?.get("quantity") || "1", 10);
+  const price = parseFloat(searchParams?.get("price") || "0.00");  
   const totalpayable = price * quantity;
   const imageUrl =
     searchParams?.get("imageUrl") || "https://via.placeholder.com/150";
