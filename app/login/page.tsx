@@ -84,7 +84,8 @@ const LoginPage: React.FC = () => {
             <input type="password" style={{ width: '100%' }} {...register('password', { required: true })} />
             <button style={{ backgroundColor: 'black', padding: '5px', color: 'white', width: '100%' }} className="my-2" type="submit">Login</button>
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            <p>Don't have an account? <Link href="/signup" style={{ color: 'blue' }}>Signup</Link></p>
+            <p>Don&apos;t have an account? <Link href="/signup" style={{ color: 'blue' }}>Signup</Link></p>
+
           </form>
         </div>
       </div>
