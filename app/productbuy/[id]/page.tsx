@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import Footer from "@/app/components/footer/footer";
 import Header from "@/app/components/header/header";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, FieldValues, FieldErrors } from "react-hook-form";
 import styles from "./productbuy.module.scss";
 import { getUserToken } from "../../utility/authtoken";
 
@@ -12,12 +12,12 @@ const Page = ({ params }: { params: { id: string } }) => {
   const userData = getUserToken();
   const { id } = params;
   const searchParams = useSearchParams();
-  const quantity = searchParams.get("quantity") || 1;
-  const name = searchParams.get("name") || "Product Name";
-  const price = searchParams.get("price") || "0.00";
+  const quantity = searchParams?.get("quantity") || 1;
+  const name = searchParams?.get("name") || "Product Name";
+  const price = parseFloat(searchParams?.get("price") || "0.00");
   const totalpayable = price * quantity;
   const imageUrl =
-    searchParams.get("imageUrl") || "https://via.placeholder.com/150";
+    searchParams?.get("imageUrl") || "https://via.placeholder.com/150";
 
   const router = useRouter();
 
@@ -36,14 +36,14 @@ const Page = ({ params }: { params: { id: string } }) => {
     document.body.appendChild(script);
   }, []);
 
-  const orderInfo = async (orderInfo: any) => {
+  const orderInfo = async (orderInfo: FieldValues) => {
     const itemdata = {
       itemNumber: id,
       quantity,
       productname: name,
       productprice: price,
       imageUrl,
-      orderStatus:'Processing'
+      orderStatus: 'Processing'
     };
     const finaldata = { ...orderInfo, ...itemdata };
 
@@ -52,7 +52,7 @@ const Page = ({ params }: { params: { id: string } }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ amount: parseInt(totalpayable) * 100 }), // Amount in paise
+      body: JSON.stringify({ amount: Math.round(totalpayable * 100) }), // Amount in paise
     });
 
     const orderData = await razorpayResponse.json();
@@ -66,7 +66,7 @@ const Page = ({ params }: { params: { id: string } }) => {
         description: "Sample Product",
         order_id: orderData.id,
         handler: async function (response: any) {
-              const orderResponse = await fetch("/api/orderdata", {
+          const orderResponse = await fetch("/api/orderdata", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -115,7 +115,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                 orderInfo({
                   ...data,
                   firstName: userData.firstName,
-                  lastName: userData.lastName,
+                  lastName: userData.lastname,
                   email: userData.email,
                 })
               )}
@@ -133,7 +133,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                   },
                 })}
               />
-              {errors.phone && (
+              {errors.phone && typeof errors.phone.message === 'string' && (
                 <span className={styles.error}>{errors.phone.message}</span>
               )}
               <input
@@ -142,7 +142,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                 className={styles.input}
                 {...register("address", { required: "Address is required" })}
               />
-              {errors.address && (
+              {errors.address && typeof errors.address.message === 'string' && (
                 <span className={styles.error}>{errors.address.message}</span>
               )}
               <input
@@ -157,7 +157,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                   },
                 })}
               />
-              {errors.pincode && (
+              {errors.pincode && typeof errors.pincode.message === 'string' && (
                 <span className={styles.error}>{errors.pincode.message}</span>
               )}
               <button type="submit" className={styles.button}>
@@ -176,7 +176,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                   required: "First Name is required",
                 })}
               />
-              {errors.firstName && (
+              {errors.firstName && typeof errors.firstName.message === 'string' && (
                 <span className={styles.error}>
                   {errors.firstName.message}
                 </span>
@@ -187,7 +187,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                 className={styles.input}
                 {...register("lastName", { required: "Last Name is required" })}
               />
-              {errors.lastName && (
+              {errors.lastName && typeof errors.lastName.message === 'string' && (
                 <span className={styles.error}>{errors.lastName.message}</span>
               )}
               <input
@@ -202,7 +202,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                   },
                 })}
               />
-              {errors.email && (
+              {errors.email && typeof errors.email.message === 'string' && (
                 <span className={styles.error}>{errors.email.message}</span>
               )}
               <input
@@ -217,7 +217,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                   },
                 })}
               />
-              {errors.phone && (
+              {errors.phone && typeof errors.phone.message === 'string' && (
                 <span className={styles.error}>{errors.phone.message}</span>
               )}
               <input
@@ -226,7 +226,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                 className={styles.input}
                 {...register("address", { required: "Address is required" })}
               />
-              {errors.address && (
+              {errors.address && typeof errors.address.message === 'string' && (
                 <span className={styles.error}>{errors.address.message}</span>
               )}
               <input
@@ -241,7 +241,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                   },
                 })}
               />
-              {errors.pincode && (
+              {errors.pincode && typeof errors.pincode.message === 'string' && (
                 <span className={styles.error}>{errors.pincode.message}</span>
               )}
               <button type="submit" className={styles.button}>
