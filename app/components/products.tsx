@@ -7,9 +7,13 @@ import Link from "next/link";
 
 interface Product {
   _id: string;
-  Name: string;
+  id: number;
+  name: string;
+  description: string;
   price?: string;
-  quantity: number;
+  imageUrl: string;
+  availableQuantity: number;
+  quantity: number; // Adding this field for quantity management
 }
 
 const Products = () => {
