@@ -7,13 +7,9 @@ export default function Home() {
   return (
     <main>
       <Header/>
-      {/* <div style={{height:'10px',backgroundColor:'red'}}></div> */}
       <ImageCarousel/>
       <Products/>
       <Footer/>
     </main>
   );
 }
-
-// mongodb://localhost:27017
-// mongodb://localhost:27017
