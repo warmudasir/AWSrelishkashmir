@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const sendOrderConfirmationEmail = async (to, orderDetails) => {
+export const sendOrderConfirmationEmail = async (to:string, orderDetails:any) => {
   const mailOptions = {
     from: 'warmudasir095@gmail.com',
     to,
