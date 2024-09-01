@@ -26,17 +26,20 @@ interface Product {
 
 const Products = () => {
   const router = useRouter();
-  const userData = getUserToken();
-
-  if (userData === null || userData.role === "user") {
-    router.push("/");
-  }
-
   const [orders, setOrders] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [statusUpdate, setStatusUpdate] = useState<Record<string, string>>({});
+  const [userData, setUserData] = useState<any>(null);
 
   useEffect(() => {
+    // This ensures the code inside only runs on the client-side
+    const token = getUserToken();
+    setUserData(token);
+
+    if (token === null || token.role === "user") {
+      router.push("/");
+    }
+
     const fetchData = async () => {
       try {
         const response = await fetch("/api/myorders");
@@ -53,7 +56,7 @@ const Products = () => {
     };
 
     fetchData();
-  }, []);
+  }, [router]);
 
   const handleStatusChange = (orderId: string, status: string) => {
     setStatusUpdate((prev) => ({

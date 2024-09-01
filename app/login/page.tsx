@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -36,21 +36,18 @@ const validateLogin = async (data: IFormInput, router: any, setError: (message: 
     const { token } = result;
     const decoded: decodedType = jwt.verify(token, SECRET_KEY);
 
-  if (typeof decoded !== 'string' && decoded.role) {
-    if (decoded.role === 'admin') {
-      console.log('Login successful');
+    if (typeof decoded !== 'string' && decoded.role) {
       localStorage.setItem('token', token);
-      router.push('/admin');
-    } else if (decoded.role === 'user') {
-      localStorage.setItem('token', token);
-      router.push('/');
-    } else if (decoded.role === 'deliveryagent') {
-      localStorage.setItem('token', token);
-      router.push('/deliveryagent');
+      if (decoded.role === 'admin') {
+        router.push('/admin');
+      } else if (decoded.role === 'user') {
+        router.push('/');
+      } else if (decoded.role === 'deliveryagent') {
+        router.push('/deliveryagent');
+      }
+    } else {
+      throw new Error('Invalid token payload');
     }
-  } else {
-    throw new Error('Invalid token payload');
-  }
   } catch (error) {
     setError('Invalid login credentials');
     console.error('Error:', error);
@@ -59,13 +56,17 @@ const validateLogin = async (data: IFormInput, router: any, setError: (message: 
 
 const LoginPage: React.FC = () => {
   const router = useRouter();
-  const userData = getUserToken();
-  if(userData){
-    router.push('/');
-  }
+  const [error, setError] = useState<string | null>(null);
+
+  // Check if the user is already logged in
+  useEffect(() => {
+    const userData = getUserToken();
+    if (userData) {
+      router.push('/');
+    }
+  }, [router]);
 
   const { register, handleSubmit } = useForm<IFormInput>();
-  const [error, setError] = useState<string | null>(null);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     setError(null); // Clear previous error messages
@@ -85,7 +86,6 @@ const LoginPage: React.FC = () => {
             <button style={{ backgroundColor: 'black', padding: '5px', color: 'white', width: '100%' }} className="my-2" type="submit">Login</button>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <p>Don&apos;t have an account? <Link href="/signup" style={{ color: 'blue' }}>Signup</Link></p>
-
           </form>
         </div>
       </div>
