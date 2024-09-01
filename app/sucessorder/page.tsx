@@ -1,7 +1,6 @@
 "use client";
 
-import React from 'react';
-
+import React, { Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Header from '../components/header/header';
@@ -9,9 +8,9 @@ import Footer from '../components/footer/footer';
 import { useSearchParams } from 'next/navigation';
 
 const OrderSuccessPage: React.FC = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const orderId = searchParams?.get('orderId');
+
   return (
     <>
       <Header />
@@ -80,4 +79,10 @@ const OrderSuccessPage: React.FC = () => {
   );
 };
 
-export default OrderSuccessPage;
+const OrderSuccessPageWithSuspense = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <OrderSuccessPage />
+  </Suspense>
+);
+
+export default OrderSuccessPageWithSuspense;
