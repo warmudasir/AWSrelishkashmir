@@ -5,7 +5,7 @@ import fs from 'fs';
 import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-const uri = 'mongodb://localhost:27017';
+const uri=process.env.MONGODB_URI;
 const dbName = 'relishKashmir';
 
 // Define the upload directory
@@ -40,7 +40,7 @@ const apiRoute = nextConnect<NextApiRequest, NextApiResponse>({
 apiRoute.use(upload.single('file'));
 
 apiRoute.post(async (req: NextApiRequest, res: NextApiResponse) => {
-  const client = new MongoClient(uri);
+  const client = new MongoClient(uri as string);
   await client.connect();
 
   const db = client.db(dbName);

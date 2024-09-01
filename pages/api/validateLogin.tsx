@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
 const SECRET_KEY = 'hello123';
-const uri = 'mongodb://localhost:27017';
+const uri=process.env.MONGODB_URI;
 
 export default async function loginHandler(req: NextApiRequest, res: NextApiResponse) {
   let client: MongoClient |null=null;
@@ -13,7 +13,7 @@ export default async function loginHandler(req: NextApiRequest, res: NextApiResp
     const { email, password } = req.body;
 
     try {
-      client = new MongoClient(uri);
+      client = new MongoClient(uri as string);
       await client.connect();
       const db = client.db('relishKashmir');
 

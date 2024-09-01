@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { MongoClient } from 'mongodb';
 import bcrypt from 'bcryptjs';
 
-const uri = 'mongodb://localhost:27017';
+const uri=process.env.MONGODB_URI;
 
 export default async function orderHandler(req: NextApiRequest, res: NextApiResponse) {
   let client: MongoClient| null=null;
@@ -11,7 +11,7 @@ export default async function orderHandler(req: NextApiRequest, res: NextApiResp
     const { firstName, lastName, email, phone, password, role } = req.body;
 
     try {
-      client = new MongoClient(uri);
+      client = new MongoClient(uri as string);
       await client.connect();
       const db = client.db('relishKashmir');
 

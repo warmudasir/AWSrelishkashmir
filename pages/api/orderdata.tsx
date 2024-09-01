@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { MongoClient } from "mongodb";
 import { sendOrderConfirmationEmail } from '../../app/utility/email';
-const uri = "mongodb://localhost:27017";
+const uri=process.env.MONGODB_URI;
 
 export default async function orderHandler(
   req: NextApiRequest,
@@ -10,7 +10,7 @@ export default async function orderHandler(
   let client: MongoClient |null=null;
 
   try {
-    client = new MongoClient(uri);
+    client = new MongoClient(uri as string);
     await client.connect();
     const db = client.db("relishKashmir");
 

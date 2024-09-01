@@ -1,9 +1,7 @@
-// import clientPromise from '../../utils/mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { MongoClient } from 'mongodb';
 
-const uri = 'mongodb://localhost:27017';
-// const dbName = 'relishKashmir';
+const uri=process.env.MONGODB_URI;
 
 export default async function orderHandler(req:NextApiRequest, res:NextApiResponse) {
 let client: MongoClient;
@@ -12,7 +10,7 @@ let client: MongoClient;
     const { itemName,price,quantity,imageUrl } = req.body;
 
     try {
-      client = new MongoClient(uri);
+      client = new MongoClient(uri as string);
       await client.connect();
       const db = client.db('relishKashmir');
 
