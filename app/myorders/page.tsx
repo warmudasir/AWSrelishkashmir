@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import Image from 'next/image';
@@ -15,9 +15,8 @@ interface Product {
   productname: string;
   quantity: number;
   productprice: number;
-  orderStatus: string; // Ensure this field is included in your Product interface
+  orderStatus: string;
 }
-
 
 const Products = () => {
   const [orders, setOrders] = useState<Product[]>([]);
@@ -25,7 +24,7 @@ const Products = () => {
   const userData = getUserToken();
 
   type Order = {
-    email:string;
+    email: string;
     _id: string;
     id: number;
     Name: string;
@@ -186,4 +185,10 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Products />
+    </Suspense>
+  );
+}
