@@ -1,14 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { MongoClient } from 'mongodb';
 
-const uri = 'mongodb+srv://warmudasir095:qK2APzxlFHk6yA0j@relishkashmir.4t7aw.mongodb.net/?retryWrites=true&w=majority&appName=relishKashmir';
+// const uri = 'mongodb+srv://warmudasir095:qK2APzxlFHk6yA0j@relishkashmir.4t7aw.mongodb.net/?retryWrites=true&w=majority&appName=relishKashmir';
 const dbName = 'relishKashmir';
+const uri=process.env.MONGODB_URI;
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   let client: MongoClient | null = null;
 
   try {
-    client = new MongoClient(uri);
+    client = new MongoClient(uri as string);
     await client.connect();
     
     const db = client.db(dbName);
