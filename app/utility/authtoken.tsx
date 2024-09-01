@@ -12,6 +12,11 @@ type userDataType = {
 type decodedType = string | JwtPayload | userDataType;
 
 export const getUserToken = (): userDataType | null => {
+  if (typeof window === 'undefined') {
+    // Ensure that this code only runs in the browser
+    return null;
+  }
+
   const token = localStorage.getItem('token');
 
   if (!token) {

@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-// import s from "./product-card-module.scss"
+
 interface Product {
   _id: string;
   id: number;
@@ -33,6 +33,8 @@ const ProductCard = ({ product }: { product: Product }) => {
     } as React.CSSProperties,
     imageWrapper: {
       width: "100%",
+      height: "200px", // Fixed height for image wrapper
+      overflow: "hidden", // Hide overflowed image parts
       position: "relative",
     } as React.CSSProperties,
     outOfStockLabel: {
@@ -60,8 +62,8 @@ const ProductCard = ({ product }: { product: Product }) => {
         <Image
           src={product.imageUrl || "/path/to/default/image.jpg"} // Provide a default image path if necessary
           alt={product.name}
-          width={200}
-          height={200}
+          layout="fill" // Fill the parent container
+          objectFit="cover" // Cover the image area while maintaining aspect ratio
         />
         {isOutOfStock && (
           <div style={styles.outOfStockLabel}>Out of Stock</div>
@@ -84,4 +86,3 @@ const ProductCard = ({ product }: { product: Product }) => {
 };
 
 export default ProductCard;
-  
