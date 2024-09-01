@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useEffect, useState, Suspense } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import Image from 'next/image';
 import { getUserToken } from "../utility/authtoken";
-import { useSearchParams } from 'next/navigation';
 
 interface Product {
   _id: string;
@@ -23,7 +22,6 @@ const Products = () => {
   const [orders, setOrders] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const userData = getUserToken();
-  const searchParams = useSearchParams(); // Use searchParams if needed
 
   type Order = {
     email: string;
@@ -187,10 +185,4 @@ const Products = () => {
   );
 };
 
-export default function ProductsPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Products />
-    </Suspense>
-  );
-}
+export default Products;
