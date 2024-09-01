@@ -5,6 +5,10 @@ import { MongoClient } from 'mongodb';
 const dbName = 'relishKashmir';
 const uri=process.env.MONGODB_URI;
 
+if (!uri) {
+  throw new Error('MONGODB_URI environment variable is not set');
+}
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   let client: MongoClient | null = null;
 
