@@ -5,6 +5,7 @@ import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import Image from 'next/image';
 import { getUserToken } from "../utility/authtoken";
+import { useSearchParams } from 'next/navigation';
 
 interface Product {
   _id: string;
@@ -22,6 +23,7 @@ const Products = () => {
   const [orders, setOrders] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const userData = getUserToken();
+  const searchParams = useSearchParams(); // Use searchParams if needed
 
   type Order = {
     email: string;
