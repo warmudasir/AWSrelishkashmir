@@ -43,15 +43,21 @@
 // }
 
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getUserToken } from "../utility/authtoken";
 import { useRouter } from "next/navigation";
 import Header from "../components/header/header";
 import Footer from "../components/footer/footer";
 
+type userDataType = {
+    firstName: string;
+    email: string;
+    lastname: string;
+    role: string;
+  };
+
 export default function Home() {
   const router = useRouter();
-  const userData = getUserToken();
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -61,7 +67,13 @@ export default function Home() {
   const [productName, setProductName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [userData, setUserData] = useState<userDataType | null>(null);
+  
+  useEffect(()=>{
 
+    const userData = getUserToken();
+    setUserData(userData);
+  })
   if (userData === null || userData.role !="admin") {
     if(userData?.role==="deliveryagent")
     {
