@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { getUserToken } from "../utility/authtoken";
 
 interface Product {
+  email?:string;
   _id: string;
   id: number;
   Name: string;
@@ -21,40 +22,34 @@ interface Product {
 const Products = () => {
   const [orders, setOrders] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const userData = getUserToken();
-
-  type Order = {
-    email: string;
-    _id: string;
-    id: number;
-    Name: string;
-    price?: string;
-    imageUrl: string;
-    productname: string;
-    quantity: number;
-    productprice: number;
-    orderStatus: string;
-  };
+  const [userData, setUserData] = useState<any>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/myorders');
-        if (!response.ok) {
-          throw new Error('Failed to fetch orders');
+    const fetchUserData = async () => {
+      const user = getUserToken();
+      setUserData(user);
+
+      if (user?.email) {
+        try {
+          const response = await fetch('/api/myorders');
+          if (!response.ok) {
+            throw new Error('Failed to fetch orders');
+          }
+          const result: Product[] = await response.json();
+          const filteredOrders = result.filter((order) => user.email === order.email);
+          setOrders(filteredOrders);
+        } catch (error) {
+          console.error('Error fetching orders:', error);
+        } finally {
+          setIsLoading(false);
         }
-        const result: Order[] = await response.json();
-        const filteredOrders = result.filter((order: Order) => userData?.email === order.email);
-        setOrders(filteredOrders);
-      } catch (error) {
-        console.error('Error fetching orders:', error);
-      } finally {
+      } else {
         setIsLoading(false);
       }
     };
 
-    fetchData();
-  }, [userData?.email]);
+    fetchUserData();
+  }, []);
 
   if (isLoading) {
     return <div>Loading...</div>;
