@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { MongoClient } from 'mongodb';
 
-const uri = 'mongodb://localhost:27017';
+const uri = 'mongodb+srv://warmudasir095:qK2APzxlFHk6yA0j@relishkashmir.4t7aw.mongodb.net/?retryWrites=true&w=majority&appName=relishKashmir';
 const dbName = 'relishKashmir';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
