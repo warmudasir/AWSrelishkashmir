@@ -11,7 +11,7 @@ const LogoGrid = () => {
     
       </Image>
       <h2 className={styles['heading']}>
-      We're all about the culture and cuisine
+      We&apos;re all about the culture and cuisine
     </h2>
     </div>
     <div className={styles['grid-container']}>
