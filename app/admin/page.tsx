@@ -1,47 +1,3 @@
-// "use client";
-// import React, { useState, useEffect } from "react";
-// import { useRouter } from "next/navigation";
-// import Header from "../components/header/header";
-// import Footer from "../components/footer/footer";
-// import { getUserToken } from "../utility/authtoken";
-// type userDataType = {
-//   firstName: string;
-//   email: string;
-//   lastname: string;
-//   role: string;
-// };
-
-// export default function Home() {
-//   const router = useRouter();
-//   const [userData, setUserData] = useState<userDataType | null>(null);
-
-//   useEffect(() => {
-//     const tokenData = getUserToken();
-//     setUserData(tokenData);
-
-//     if (tokenData === null || tokenData.role !== "admin") {
-//       if (tokenData && tokenData.role === "deliveryagent") {
-//         router.push("/deliveryagent");
-//       } else {
-//         router.push("/");
-//       }
-//     }
-//   }, [router]);
-
-//   // Your state management and form handlers
-//   // ...
-
-//   return (
-//     <div>
-//       <Header />
-//       <div style={{ padding: "100px" }}>
-//         {/* Your form and button elements */}
-//         <Footer />
-//       </div>
-//     </div>
-//   );
-// }
-
 "use client";
 import { useEffect, useState } from "react";
 import { getUserToken } from "../utility/authtoken";
@@ -50,15 +6,15 @@ import Header from "../components/header/header";
 import Footer from "../components/footer/footer";
 
 type userDataType = {
-    firstName: string;
-    email: string;
-    lastname: string;
-    role: string;
-  };
+  firstName: string;
+  email: string;
+  lastname: string;
+  role: string;
+};
 
 export default function Home() {
   const router = useRouter();
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -68,29 +24,24 @@ export default function Home() {
   const [imageUrl, setImageUrl] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [userData, setUserData] = useState<userDataType | null>(null);
-  
-  useEffect(()=>{
 
+  useEffect(() => {
     const userData = getUserToken();
     setUserData(userData);
-  })
-  if (userData === null || userData.role !="admin") {
-    if(userData?.role==="deliveryagent")
-    {
-      router.push("/deliveryagent");
+    if (userData === null || userData.role !== "admin") {
+      if (userData?.role === "deliveryagent") {
+        router.push("/deliveryagent");
+      } else {
+        router.push("/");
+      }
     }
-    else
-    {
-      router.push("/");
-
-    }
-  }
+  }, []); // Add an empty dependency array
 
   const checkOrders = () => {
     router.push("/allorders");
   };
 
-  const addquantity = async (e:any) => {
+  const addquantity = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const orderResponse = await fetch("/api/updatequantity", {
@@ -99,16 +50,22 @@ export default function Home() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          updateQuantity,
+          updatequantity,
           productName,
         }),
       });
+
+      if (orderResponse.ok) {
+        console.log("Quantity updated successfully");
+      } else {
+        console.error("Error updating quantity");
+      }
     } catch (error) {
-      console.error("Error updating quantity");
+      console.error("Error updating quantity", error);
     }
   };
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file) {
       alert("Please select a file to upload.");
@@ -122,22 +79,27 @@ export default function Home() {
     formData.append("price", price);
     formData.append("quantity", quantity);
 
-    const res = await fetch("/api/imageupload", {
-      method: "POST",
-      body: formData,
-    });
+    try {
+      const res = await fetch("/api/imageupload", {
+        method: "POST",
+        body: formData,
+      });
 
-    if (res.ok) {
-      const data = await res.json();
-      setImageUrl(data.imageUrl);
-      setErrorMessage(""); // Clear any previous error message
-    } else {
-      const errorData = await res.json();
-      if (errorData.error) {
-        setErrorMessage("The product with the same name already exists");
+      if (res.ok) {
+        const data = await res.json();
+        setImageUrl(data.imageUrl);
+        setErrorMessage(""); // Clear any previous error message
       } else {
-        setErrorMessage("Error uploading image");
+        const errorData = await res.json();
+        if (errorData.error) {
+          setErrorMessage("The product with the same name already exists");
+        } else {
+          setErrorMessage("Error uploading image");
+        }
       }
+    } catch (error) {
+      console.error("Error uploading image", error);
+      setErrorMessage("Error uploading image");
     }
   };
 
@@ -199,7 +161,7 @@ export default function Home() {
               style={{ width: "100%", marginBottom: "10px" }}
             />
             <br />
-            <input type="file" onChange={(e:any) => setFile(e.target.files[0])} />
+            <input type="file" onChange={(e: any) => setFile(e.target.files[0])} />
             <br />
             <button
               type="submit"

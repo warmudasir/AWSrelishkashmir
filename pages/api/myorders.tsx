@@ -1,14 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { MongoClient } from 'mongodb';
 
-const uri = 'mongodb://localhost:27017';
+const uri=process.env.MONGODB_URI;
 const dbName = 'relishKashmir';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   let client: MongoClient |null=null;
 
   try {
-    client = new MongoClient(uri);
+    client = new MongoClient(uri as string);
     await client.connect();
     
     const db = client.db(dbName);
