@@ -6,6 +6,7 @@ import footer from "./components/footer/footer";
 import ProductContextProvider from "./context/productcontext";
 import styles from './styles/colors.module.scss';
 import Script from 'next/script';
+import { Analytics } from "@vercel/analytics/react"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default function RootLayout({
       <ProductContextProvider>
         <body className={inter.className} style={{ backgroundColor: styles.backgroundColor, color: styles.textColor }}>
           {children}
+        <Analytics/>
         </body>
       </ProductContextProvider>
       <footer />
