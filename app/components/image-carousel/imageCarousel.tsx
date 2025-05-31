@@ -4,6 +4,7 @@ import styles from './ImageCarousel.module.scss';
 
 const images = [
   // "/chk.svg",
+  // "main.jpg",
   "/RelishKashmir.png",
   "Rk2.png"
 ];

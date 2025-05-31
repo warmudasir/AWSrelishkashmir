@@ -1,15 +1,11 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import logo3 from "../../../images/logot.png";
-import cartlogo from "../../../images/cartlogo.svg";
-import userlogo from "../../../images/user-solid.svg";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';  
-import { getUserToken } from "../../utility/authtoken";
-import styles from './header.module.scss';
-import { useContext } from 'react';
-import { ProductContext } from '../../context/productcontext';
+import { getUserToken } from "../../../utility/authtoken";
+import s from './header.module.scss';
+import cn from "classnames";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -17,78 +13,36 @@ const Header = () => {
   const router = useRouter();
 
   useEffect(() => {
-    // Get user token from localStorage and set userData
     const token = localStorage.getItem('token');
     if (token) {
-      const user = getUserToken(); // Adjust this function if needed
+      const user = getUserToken();
       setUserData(user);
     } else {
       setUserData(null);
     }
-  }, []); // Empty dependency array means this runs only once after the component mounts
+  }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');  // Remove the user token
-    setUserData(null); // Update state to reflect the logout
-    router.push('/login');  // Redirect to login page
+    localStorage.removeItem('token');
+    setUserData(null);
+    router.push('/login');
   };
 
   return (
-    <>
-      <div className={styles.header}>
-        <div className={styles.topBar}>
-          <div className={styles.logo}>
-            <Image
-              src={logo3}
-              alt="Center Logo"
-              width={200}
-            />
-          </div>
-          <div className={styles.icons}>
-            <Image
-              src={cartlogo}
-              alt="Cart Logo"
-              width={25}
-              className={styles.showOnDesktop}
-            />
-            <Image
-              src={userlogo}
-              alt="User Logo"
-              width={25}
-              className={styles.showOnDesktop}
-            />
-            <div className={styles.userName}>
-              <h2>
-                {userData && userData.firstName ? userData.firstName : ''}
-              </h2>
-            </div>
-          </div>
-          <div className={styles.hamburgerMenu}>
-            <input type="checkbox" id="menu-toggle" checked={menuOpen} onChange={() => setMenuOpen(!menuOpen)} />
-            <label htmlFor="menu-toggle" className={styles.menuIcon}>
-              <div></div>
-              <div></div>
-              <div></div>
-            </label>
+      <nav className="fixed top-0 left-0 w-full z-20 bg-opacity-70 py-4" style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
+        <div className="flex justify-between items-center w-full px-4">
+          <div><Link href={"/"}><h1 className="text-white">Relish Kashmir</h1></Link></div>
+          <div className={cn(s["Header__nav-links"])}>
+            <Link href="/about" className="text-white hover:text-gray-300">About</Link>
+            <Link href="/shop" className="text-white hover:text-gray-300">Shop here</Link>
+            {userData ? (
+              <button onClick={handleLogout} className="text-white hover:text-gray-300">Logout</button>
+            ) : (
+              <Link href="/login" className="text-white hover:text-gray-300">Login</Link>
+            )}
           </div>
         </div>
-
-        <nav className={`${styles.nav} ${menuOpen ? styles.showMenu : ''}`}>
-          <ul>
-            <li><Link href="/">All</Link></li>
-            <li><Link href="/myorders">My Orders</Link></li>
-            {userData?.email ? (
-              <>
-                <li onClick={handleLogout}>Logout</li>
-              </>
-            ) : (
-              <li><Link href="/login">Login</Link></li>
-            )}
-          </ul>
-        </nav>
-      </div>
-      <div style={{height:'45px'}}></div>
-    </>
+      </nav>
   );
 };
 

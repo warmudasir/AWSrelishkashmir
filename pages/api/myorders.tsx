@@ -1,18 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { MongoClient } from 'mongodb';
-
-const uri=process.env.MONGODB_URI;
-const dbName = 'relishKashmir';
+import { dbConnection } from '@/lib/db';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   let client: MongoClient |null=null;
 
   try {
-    client = new MongoClient(uri as string);
-    await client.connect();
-    
-    const db = client.db(dbName);
-    
+    const db=await dbConnection();
     const collection = db.collection('orders');
     console.log("called");
     const posts = await collection.find({}).toArray();
@@ -21,12 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   } catch (error: any) {
     console.error('MongoDB connection error:', error);
     res.status(500).json({ error: 'Failed to connect to database', details: error.message });
-  } finally {
-    if (client) {
-      console.log('Closing MongoDB connection');
-      await client.close();
-    }
-  }
+  } 
 };
 
 export default handler;

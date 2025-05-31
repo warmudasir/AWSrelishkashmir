@@ -3,15 +3,16 @@
 
 /* Footer styles */
 .footerContainer {
-    background-color: $primary-color;
-    color: $secondary-color;
+    background-color:$footer-background-color;
+    color: white;
     padding: 20px 50px;
   }
   
   .socialIcons {
     display: flex;
-    justify-content: center;
-    padding: 10px;
+    justify-content: flex-end;
+    padding: 8px;
+  
   }
   
   .socialIcons img {

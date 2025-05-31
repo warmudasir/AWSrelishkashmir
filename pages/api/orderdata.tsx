@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { MongoClient } from "mongodb";
-import { sendOrderConfirmationEmail } from '../../app/utility/email';
+import { sendOrderConfirmationEmail } from '../../utility/email';
 const uri=process.env.MONGODB_URI;
 
 export default async function orderHandler(

@@ -1,20 +1,11 @@
-// import clientPromise from '../../utils/mongodb';
+import { dbConnection } from '@/lib/db';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { MongoClient } from 'mongodb';
-
-const uri=process.env.MONGODB_URI;
-// const dbName = 'relishKashmir';
 
 export default async function orderHandler(req:NextApiRequest, res:NextApiResponse) {
-let client: MongoClient;
+  const db=await dbConnection();
   if (req.method === 'POST') {
-    
     const { review,id,nameofreviewer,userType } = req.body;
-
     try {
-      client = new MongoClient(uri as string);
-      await client.connect();
-      const db = client.db('relishKashmir');
 
       const collection = db.collection('productreviews');
       const result = await collection.insertOne({review,id,nameofreviewer,userType});
@@ -27,10 +18,6 @@ let client: MongoClient;
   } else if(req.method==='GET')
   {
     try {
-      client = new MongoClient(uri as string);
-      await client.connect();
-      const db = client.db('relishKashmir');
-
       const collection = db.collection('productreviews');
       const result = await collection.find({}).toArray();
       res.json(result);

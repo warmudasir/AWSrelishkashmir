@@ -7,7 +7,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { getUserToken } from "../utility/authtoken";
+import { getUserToken } from "../../utility/authtoken";
 
 interface IFormInput {
   email: string;
@@ -75,7 +75,6 @@ const LoginPage: React.FC = () => {
 
   return (
     <>
-      <Header />
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <div className="login" style={{ width: '300px', backgroundColor: '#FBE9D0', padding: '10px', borderRadius: '2px' }}>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -89,7 +88,6 @@ const LoginPage: React.FC = () => {
           </form>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

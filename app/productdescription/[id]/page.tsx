@@ -2,13 +2,11 @@
 
 import React, { useContext, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Header from "@/app/components/header/header";
-import Footer from "@/app/components/footer/footer";
 import ProductCard from "@/app/components/product-card/productCard";
 import Quantity from "@/app/components/product-quantity/quantity";
-import { getUserToken } from "@/app/utility/authtoken";
+import { getUserToken } from "@/utility/authtoken";
 import { ProductContext } from "@/app/context/productcontext";
-import styles from '../styles/colors.module.scss';
+import s from './page.module.scss'
 
 interface Product {
   _id: string;
@@ -198,11 +196,10 @@ try {
 
   return (
     <div>
-      <Header />
-      <div className="product-container">
+      <div className={s["product-container"]}>
         <ProductCard product={product} />
-        <div className="product-details">
-          <h1 className="product-title">{product.name}</h1>
+        <div className={s["product-details"]}>
+          <h1 className={s["product-title"]}>{product.name}</h1>
           <p>{product.description}</p>
           <Quantity
             quantity={quantity}
@@ -210,12 +207,12 @@ try {
             handleDecreaseQuantity={handleDecreaseQuantity}
           />
           {maxQuantityReached && (
-            <p className="max-quantity-message">
+            <p className={s["max-quantity-message"]}>
               Maximum available quantity reached
             </p>
           )}
-          <div className="button-group">
-            <button onClick={buyprod} className="buy-now-button">
+          <div className={s["button-group"]}>
+            <button onClick={buyprod} className={s["buy-now-button"]}>
               Buy Now
             </button>
             {/* <button onClick={handleAddToCart} className="add-to-cart-button">
@@ -227,18 +224,18 @@ try {
 
       <hr />
       {/* Review Section */}
-      <div className="review-section">
+      <div className={s["review-section"]}>
         <h2>Product Reviews</h2>
         <ol>
           {reviews
             .filter((review) => review.id === id)
             .map((review, index) => (
               <li key={index}>
-                <div className="review-content">
-                  <p className="review-text">{review.review.comment}</p>
-                  <div className="review-details">
-                    <p className="reviewer-name">{review.nameofreviewer}</p>
-                    <p className="reviewer-status">{review.userType}</p>
+                <div className={s["review-content"]}>
+                  <p className={s["review-text"]}>{review.review.comment}</p>
+                  <div className={s["review-details"]}>
+                    <p className={s["reviewer-name"]}>{review.nameofreviewer}</p>
+                    <p className={s["reviewer-status"]}>{review.userType}</p>
                   </div>
                 </div>
               </li>
@@ -249,165 +246,10 @@ try {
           value={newReview}
           onChange={(e) => setNewReview(e.target.value)}
         />
-        <button onClick={handleReviewSubmit} className="submit-review-button">
+        <button onClick={handleReviewSubmit} className={s["submit-review-button"]}>
           Submit Review
         </button>
       </div>
-      <Footer />
-      <style jsx>{`
-        .product-container {
-          padding: 100px 20px 50px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-
-        .product-details {
-          margin-top: 30px;
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 10px;
-        }
-
-        .product-title {
-          font-size: 20px;
-          font-weight: bold;
-        }
-
-        .max-quantity-message {
-          color: red;
-          font-size: 14px;
-          margin-top: 10px;
-        }
-
-        .button-group {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          margin-top: 20px;
-        }
-
-        .buy-now-button,
-        .add-to-cart-button {
-          background-color: #050a44;
-          color: white;
-          padding: 15px;
-          border-radius: 2px;
-          cursor: pointer;
-          width: 100%;
-        }
-
-        .review-section {
-          margin-top: 30px;
-          max-width: 600px;
-          margin: 0 auto;
-          text-align: left; /* Ensure the section is left-aligned */
-        }
-
-        .review-section h2 {
-          font-size: 24px;
-          margin-bottom: 20px;
-        }
-
-        .review-section textarea {
-          width: 100%;
-          padding: 10px;
-          margin-top: 10px;
-          border-radius: 4px;
-          border: 1px solid #ccc;
-          resize: none;
-        }
-
-        .review-section button {
-          margin-top: 10px;
-          padding: 5px 10px;
-          background-color: #3498db;
-          color: #fff;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: background-color 0.2s ease;
-        }
-
-        .review-section button:hover {
-          background-color: #2980b9;
-        }
-
-        ul {
-          padding-left: 0;
-          list-style-type: none; /* Remove default bullets */
-          color: #555;
-          margin-bottom: 20px;
-        }
-
-        li {
-          margin-bottom: 20px;
-        }
-
-        .review-content {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          width: 100%;
-        }
-
-        .review-text {
-          margin-right: 10px;
-          flex-grow: 1; /* Take the available space */
-        }
-
-        .review-details {
-          text-align: right; /* Align text to the right */
-          white-space: nowrap; /* Prevent line break */
-        }
-
-        .reviewer-name {
-          font-weight: bold;
-        }
-
-        .reviewer-status {
-          font-size: 0.8em; /* Smaller text for status */
-          color: gray; /* Change color to indicate status */
-        }
-
-        @media (min-width: 768px) {
-          .product-container {
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-around;
-            padding-top: 150px;
-          }
-
-          .product-details {
-            margin-left: 50px;
-            text-align: left;
-            align-items: flex-start;
-            flex: 1;
-          }
-
-          .product-title {
-            font-size: 24px;
-          }
-
-          .button-group {
-            flex-direction: row;
-          }
-
-          .buy-now-button,
-          .add-to-cart-button {
-            width: auto;
-          }
-
-          .review-section {
-            text-align: left; /* Align to left on larger screens */
-            margin-left: 20px; /* Add margin to the left */
-          }
-        }
-      `}</style>
     </div>
   );
 };

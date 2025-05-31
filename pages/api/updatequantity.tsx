@@ -1,20 +1,14 @@
 // import clientPromise from '../../utils/mongodb';
+import { dbConnection } from '@/lib/db';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { MongoClient } from 'mongodb';
-
-const uri = 'mongodb://localhost:27017';
-// const dbName = 'relishKashmir';
 
 export default async function orderHandler(req:NextApiRequest, res:NextApiResponse) {
-let client: MongoClient;
   if (req.method === 'POST') {
     
     const { updateQuantity,productName } = req.body;
 
     try {
-      client = new MongoClient(uri);
-      await client.connect();
-      const db = client.db('relishKashmir');
+      const db=await dbConnection();
       const itemsCollection = db.collection('items');
     
     // Update the quantity in the database

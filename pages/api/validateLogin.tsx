@@ -1,22 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { MongoClient } from 'mongodb';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import { dbConnection } from '@/lib/db';
 
 const SECRET_KEY = 'hello123';
-const uri=process.env.MONGODB_URI;
 
 export default async function loginHandler(req: NextApiRequest, res: NextApiResponse) {
-  let client: MongoClient |null=null;
 
   if (req.method === 'POST') {
     const { email, password } = req.body;
+    const db=await dbConnection();
 
     try {
-      client = new MongoClient(uri as string);
-      await client.connect();
-      const db = client.db('relishKashmir');
-
       const collection = db.collection('users');
 
       // Find the user by email
@@ -49,9 +44,7 @@ export default async function loginHandler(req: NextApiRequest, res: NextApiResp
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Internal Server Error' });
-    } finally {
-      await client?.close();
-    }
+    } 
   } else {
     res.setHeader('Allow', ['POST']);
     res.status(405).end(`Method ${req.method} Not Allowed`);

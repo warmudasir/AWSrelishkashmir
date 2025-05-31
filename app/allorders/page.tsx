@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/header/header";
 import Footer from "../components/footer/footer";
 import Image from "next/image";
-import { getUserToken } from "../utility/authtoken";
+import { getUserToken } from "../../utility/authtoken";
 import { useRouter } from "next/navigation";
 
 interface Product {

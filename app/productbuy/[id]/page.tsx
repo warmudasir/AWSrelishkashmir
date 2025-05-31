@@ -6,7 +6,7 @@ import Header from "@/app/components/header/header";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, FieldValues, FieldErrors } from "react-hook-form";
 import styles from "./productbuy.module.scss";
-import { getUserToken } from "../../utility/authtoken";
+import { getUserToken } from "../../../utility/authtoken";
 // global.d.ts
 
 interface Window {
@@ -112,10 +112,11 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   return (
     <div>
-      <Header />
       <div className={styles.container}>
+        
         {userData && userData.email ? (
           <div className={styles.formWrapper}>
+            
             <form
               onSubmit={handleSubmit((data) =>
                 orderInfo({
@@ -268,7 +269,6 @@ const Page = ({ params }: { params: { id: string } }) => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

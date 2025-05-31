@@ -1,19 +1,13 @@
+import { dbConnection } from '@/lib/db';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { MongoClient } from 'mongodb';
-
-const uri=process.env.MONGODB_URI;
 
 export default async function orderHandler(req:NextApiRequest, res:NextApiResponse) {
-let client: MongoClient;
   if (req.method === 'POST') {
     
     const { itemName,price,quantity,imageUrl } = req.body;
 
     try {
-      client = new MongoClient(uri as string);
-      await client.connect();
-      const db = client.db('relishKashmir');
-
+     const db=await dbConnection();
       const collection = db.collection('items');
       const result = await collection.insertOne({ itemName,price,quantity,imageUrl});
 

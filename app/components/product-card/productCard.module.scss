@@ -1,0 +1,79 @@
+.productCard{
+    width: 220px;
+    padding: 10px;
+    background-color: #c6dec6;
+    border-radius: 2px;
+    color:black;
+    margin: 0 auto; // Center the card
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+  .imageWrapper {
+      width: 100%;
+      height: 200px; // Fixed height for image wrapper
+      overflow: hidden; // Hide overflowed image parts
+      position: relative;
+    } 
+.outOfStockLabel{
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+
+.productDetails {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  } 
+
+
+  // ---------------
+  // const styles = {
+  //   productCard: {
+  //     width: 220px,
+  //     padding: 10px,
+  //     backgroundColor: #003135 ,
+  //     borderRadius: 2px,
+  //     color: white,
+  //     textDecoration:none,
+  //     margin: 0 auto, // Center the card
+  //     display: flex,
+  //     flexDirection: column,
+  //     justifyContent: space-between,
+  //     alignItems: center,
+  //     position: relative,
+  //   } as React.CSSProperties,
+  //   imageWrapper: {
+  //     width: 100%,
+  //     height: 200px, // Fixed height for image wrapper
+  //     overflow: hidden, // Hide overflowed image parts
+  //     position: relative,
+  //   } as React.CSSProperties,
+  //   outOfStockLabel: {
+  //     position: absolute,
+  //     bottom: 10px,
+  //     left: 50%,
+  //     transform: translateX(-50%),
+  //     backgroundColor: rgba(0, 0, 0, 0.7),
+  //     color: white,
+  //     padding: 2px 6px,
+  //     borderRadius: 3px,
+  //     fontSize: 12px,
+  //   } as React.CSSProperties,
+  //   productDetails: {
+  //     width: 100%,
+  //     display: flex,
+  //     justifyContent: space-between,
+  //     marginTop: 10px,
+  //   } as React.CSSProperties,
+  // };

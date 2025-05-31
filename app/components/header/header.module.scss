@@ -1,153 +1,27 @@
-/* header.module.scss */
-@import "../../styles/colors.module.scss";
-
-.header {
-    position: fixed;
-    width: 100%;
-    background-color: $primary-color;
-    z-index: 1000; /* Ensure the header is above other content */
-    top: 0px;
+.Header{
+  &__background-text-container{
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    &_background-text{
+      font-size: 50px;
+      white-space: nowrap;
+      @media  screen and (max-width: 768px) {
+        font-size: 15px; // Adjust font size for smaller screens
+      }
+    }
   }
-  
-  .topBar {
+  &__nav-links{
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-  }
-  
-  .logo {
-    flex-grow: 1;
-    text-align: center;
-  }
-  
-  .icons {
-    display: flex;
-    align-items: center;
-  }
-  
-  .icons img {
-    margin-left: 30px;
-  }
-  
-  .hamburgerMenu {
-    display: none;
-  }
-  
-  .hamburgerMenu input[type="checkbox"] {
-    display: none;
-  }
-  
-  .hamburgerMenu .menuIcon {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-  }
-  
-  .hamburgerMenu .menuIcon div {
-    background-color: $secondary-color;
-    height: 3px;
-    width: 30px;
-    margin: 5px 0;
-  }
-  
-  .nav {
-    display: none;
-    width: 100%;
-    text-align: center;
-    background-color: $secondary-color; /* Set background color to black */
-  }
-  
-  .nav ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  .nav ul li {
-    flex: 1; /* Make list items take up equal width */
-    min-width: 250px; /* Add a minimum width to prevent wrapping */
-    padding: 15px 30px; /* Increase padding for more space between items */
-    cursor: pointer;
-    background-color: $secondary-color; /* Set background color to black */
-    color: white; /* Set text color to white for contrast */
-    white-space: nowrap; /* Prevent text from wrapping */
-  }
-  
-  .showMenu {
-    display: block;
-  }
-  
-  /* Hide icons on mobile, show on larger screens */
-  .hideOnMobile {
-    display: none;
-  }
-  
-  .showOnDesktop {
-    display: none;
-  }
-
-  .userName{
-    margin: 0px 10px 0px 10px;
-  }
-  
-  /* Media Queries */
-  @media (max-width: 768px) {
-    .userName {
-      display: none;
-    }
-
-    .hamburgerMenu {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  
-    .nav {
-      position: absolute;
-      top: 60px; /* Adjust based on your header height */
-      left: 0;
-      flex-direction: column;
-    }
-  
-    .nav ul {
-      flex-direction: column; /* Stack items vertically on mobile */
-    }
-  
-    .nav ul li {
-      border-bottom: 1px solid #FBE9D0; /* Add bottom border for separation */
+    gap: 24px;
+    @media screen and (max-width: 768px) {
+      display: none; // Hide navigation links on smaller screens
+      
     }
   }
-  
-  @media (min-width: 769px) {
-    .hamburgerMenu {
-      display: none;
-    }
-   
-    
-  
-    .icons {
-      display: flex;
-    }
-  
-    .nav {
-      display: flex;
-      justify-content: center;
-    }
-  
-    .nav ul {
-      flex-direction: row;
-    }
-  
-    .nav ul li {
-      border-right: none; /* Remove borders between list items on desktop */
-      padding: 15px 40px; /* Increase padding for more space between items */
-    }
-  
-    .showOnDesktop {
-      display: block;
-    }
-  }
-  
+}

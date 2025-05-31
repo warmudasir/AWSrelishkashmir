@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getUserToken } from "../utility/authtoken";
+import { getUserToken } from "../../utility/authtoken";
 import { useRouter } from "next/navigation";
 import Header from "../components/header/header";
 import Footer from "../components/footer/footer";

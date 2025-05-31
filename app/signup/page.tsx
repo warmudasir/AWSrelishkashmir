@@ -34,7 +34,6 @@ const SignupPage = () => {
 
   return (
     <div>
-      <Header />
       <div className={styles.signupContainer}>
         <div className={styles.formWrapper}>
           <form onSubmit={handleSubmit(orderInfo)} className={styles.signupForm}>
@@ -80,7 +79,6 @@ const SignupPage = () => {
           </button>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

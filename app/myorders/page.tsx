@@ -1,10 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import Header from '../components/header/header';
-import Footer from '../components/footer/footer';
 import Image from 'next/image';
-import { getUserToken } from "../utility/authtoken";
+import { getUserToken } from "../../utility/authtoken";
 
 interface Product {
   email?:string;
@@ -58,18 +56,15 @@ const Products = () => {
   if (userData?.email && orders.length === 0) {
     return (
       <div>
-        <Header />
         <div className="no-orders">
           <h2>No orders found</h2>
         </div>
-        <Footer />
       </div>
     );
   }
 
   return (
     <div>
-      <Header />
       <div className="orders-container">
         {userData?.email ? (
           orders
@@ -103,7 +98,6 @@ const Products = () => {
           </div>
         )}
       </div>
-      <Footer />
       <style jsx>{`
         .orders-container {
           padding: 20px;
