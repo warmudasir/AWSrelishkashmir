@@ -1,70 +1,68 @@
 .signupContainer {
-    margin-top: 80px; /* Add margin to separate from the navbar */
-    margin-bottom: 40px;
-    padding: 20px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    background-color: #fbe9d0;
+  margin-top: 80px; /* Add margin to separate from the navbar */
+  margin-bottom: 40px;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.formWrapper {
+  width: 100%;
+  max-width: 600px; /* Limit width on larger screens */
+  background-color: #ffffff;
+  border: 2px solid black;
+  padding: 15px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+}
+
+.signupForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between form elements */
+}
+
+.input {
+  border: 1px solid black;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+.signupButton {
+  background-color: #007bff; /* Blue color */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3; /* Darker blue on hover */
   }
-  
+}
+
+.loginRedirectButton {
+  background-color: transparent;
+  color: #007bff; /* Blue text */
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #0056b3; /* Darker blue on hover */
+  }
+}
+
+@media (min-width: 768px) {
+  .signupContainer {
+    padding: 50px; /* Reduce padding on larger screens */
+  }
+
   .formWrapper {
-    width: 100%;
-    max-width: 600px; /* Limit width on larger screens */
-    background-color: #ffffff;
-    border: 2px solid black;
-    padding: 15px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+    width: 60%; /* Allow more space on larger screens */
   }
-  
-  .signupForm {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Space between form elements */
-  }
-  
-  .input {
-    border: 1px solid black;
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box; /* Ensure padding doesn't affect width */
-  }
-  
-  .signupButton {
-    background-color: #007bff; /* Blue color */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-  
-    &:hover {
-      background-color: #0056b3; /* Darker blue on hover */
-    }
-  }
-  
-  .loginRedirectButton {
-    background-color: transparent;
-    color: #007bff; /* Blue text */
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    text-decoration: underline;
-    transition: color 0.3s ease;
-  
-    &:hover {
-      color: #0056b3; /* Darker blue on hover */
-    }
-  }
-  
-  @media (min-width: 768px) {
-    .signupContainer {
-      padding: 50px; /* Reduce padding on larger screens */
-    }
-  
-    .formWrapper {
-      width: 60%; /* Allow more space on larger screens */
-    }
-  }
-  
+}

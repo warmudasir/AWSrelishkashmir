@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Footer from "@/app/components/footer/footer";
-import Header from "@/app/components/header/header";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, FieldValues, FieldErrors } from "react-hook-form";
 import styles from "./productbuy.module.scss";
@@ -13,14 +11,13 @@ interface Window {
   Razorpay: any; // You can replace `any` with a more specific type if available
 }
 
-
 const Page = ({ params }: { params: { id: string } }) => {
   const userData = getUserToken();
   const { id } = params;
   const searchParams = useSearchParams();
   const name = searchParams?.get("name") || "Product Name";
   const quantity = parseInt(searchParams?.get("quantity") || "1", 10);
-  const price = parseFloat(searchParams?.get("price") || "0.00");  
+  const price = parseFloat(searchParams?.get("price") || "0.00");
   const totalpayable = price * quantity;
   const imageUrl =
     searchParams?.get("imageUrl") || "https://via.placeholder.com/150";
@@ -49,7 +46,7 @@ const Page = ({ params }: { params: { id: string } }) => {
       productname: name,
       productprice: price,
       imageUrl,
-      orderStatus: 'Processing'
+      orderStatus: "Processing",
     };
     const finaldata = { ...orderInfo, ...itemdata };
 
@@ -113,10 +110,8 @@ const Page = ({ params }: { params: { id: string } }) => {
   return (
     <div>
       <div className={styles.container}>
-        
         {userData && userData.email ? (
           <div className={styles.formWrapper}>
-            
             <form
               onSubmit={handleSubmit((data) =>
                 orderInfo({
@@ -140,7 +135,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                   },
                 })}
               />
-              {errors.phone && typeof errors.phone.message === 'string' && (
+              {errors.phone && typeof errors.phone.message === "string" && (
                 <span className={styles.error}>{errors.phone.message}</span>
               )}
               <input
@@ -149,7 +144,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                 className={styles.input}
                 {...register("address", { required: "Address is required" })}
               />
-              {errors.address && typeof errors.address.message === 'string' && (
+              {errors.address && typeof errors.address.message === "string" && (
                 <span className={styles.error}>{errors.address.message}</span>
               )}
               <input
@@ -164,7 +159,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                   },
                 })}
               />
-              {errors.pincode && typeof errors.pincode.message === 'string' && (
+              {errors.pincode && typeof errors.pincode.message === "string" && (
                 <span className={styles.error}>{errors.pincode.message}</span>
               )}
               <button type="submit" className={styles.button}>
@@ -183,20 +178,24 @@ const Page = ({ params }: { params: { id: string } }) => {
                   required: "First Name is required",
                 })}
               />
-              {errors.firstName && typeof errors.firstName.message === 'string' && (
-                <span className={styles.error}>
-                  {errors.firstName.message}
-                </span>
-              )}
+              {errors.firstName &&
+                typeof errors.firstName.message === "string" && (
+                  <span className={styles.error}>
+                    {errors.firstName.message}
+                  </span>
+                )}
               <input
                 type="text"
                 placeholder="Last Name"
                 className={styles.input}
                 {...register("lastName", { required: "Last Name is required" })}
               />
-              {errors.lastName && typeof errors.lastName.message === 'string' && (
-                <span className={styles.error}>{errors.lastName.message}</span>
-              )}
+              {errors.lastName &&
+                typeof errors.lastName.message === "string" && (
+                  <span className={styles.error}>
+                    {errors.lastName.message}
+                  </span>
+                )}
               <input
                 type="email"
                 placeholder="Email"
@@ -209,7 +208,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                   },
                 })}
               />
-              {errors.email && typeof errors.email.message === 'string' && (
+              {errors.email && typeof errors.email.message === "string" && (
                 <span className={styles.error}>{errors.email.message}</span>
               )}
               <input
@@ -224,7 +223,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                   },
                 })}
               />
-              {errors.phone && typeof errors.phone.message === 'string' && (
+              {errors.phone && typeof errors.phone.message === "string" && (
                 <span className={styles.error}>{errors.phone.message}</span>
               )}
               <input
@@ -233,7 +232,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                 className={styles.input}
                 {...register("address", { required: "Address is required" })}
               />
-              {errors.address && typeof errors.address.message === 'string' && (
+              {errors.address && typeof errors.address.message === "string" && (
                 <span className={styles.error}>{errors.address.message}</span>
               )}
               <input
@@ -248,7 +247,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                   },
                 })}
               />
-              {errors.pincode && typeof errors.pincode.message === 'string' && (
+              {errors.pincode && typeof errors.pincode.message === "string" && (
                 <span className={styles.error}>{errors.pincode.message}</span>
               )}
               <button type="submit" className={styles.button}>

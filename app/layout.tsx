@@ -4,8 +4,8 @@ import "./globals.css";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import ProductContextProvider from "./context/productcontext";
-import Script from 'next/script';
-import { Analytics } from "@vercel/analytics/react"
+import Script from "next/script";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,7 +38,7 @@ export default function RootLayout({
       <body style={{ backgroundColor: "#024950", color: "#E0E0E0" }}>
         <ProductContextProvider>
           <Header />
-          <main >{children}</main>
+          <main>{children}</main>
           <Footer />
           <Analytics />
         </ProductContextProvider>

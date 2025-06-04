@@ -1,19 +1,20 @@
-.Header{
-    &__background-text-container{
-        color: white;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 24px;
-        font-weight: bold;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        &_background-text{
-          font-size: 50px;
-          white-space: nowrap;
-          @media  screen and (max-width: 768px) {
-            font-size: 15px; // Adjust font size for smaller screens
-          }
-        }
+.Header {
+  &__background-text-container {
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    &_background-text {
+      font-size: 50px;
+      white-space: nowrap;
+      @media screen and (max-width: 768px) {
+        font-size: 25px; // Adjust font size for smaller screens
+        white-space: normal;
       }
+    }
+  }
 }

@@ -1,12 +1,12 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import styles from './ImageCarousel.module.scss';
+import React, { useState, useEffect } from "react";
+import styles from "./ImageCarousel.module.scss";
 
 const images = [
   // "/chk.svg",
   // "main.jpg",
   "/RelishKashmir.png",
-  "Rk2.png"
+  "Rk2.png",
 ];
 
 const ImageCarousel = () => {
@@ -36,7 +36,7 @@ const ImageCarousel = () => {
         <div
           key={index}
           className={`${styles.carouselImage} ${
-            index === currentIndex ? styles.active : ''
+            index === currentIndex ? styles.active : ""
           }`}
           style={{ backgroundImage: `url(${image})` }}
         />
