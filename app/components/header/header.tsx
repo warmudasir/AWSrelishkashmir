@@ -1,38 +1,47 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { getUserToken } from "../../../utility/authtoken";
 import s from "./header.module.scss";
 import cn from "classnames";
-import barssolid from "../../../public/bars-solid.svg"; // Adjust the path as needed
+import barssolid from "../../../public/bars-solid.svg";
+import { useAuth } from "@/app/context/authcontext";
 
-const Header = () => {
+type HeaderProps = {
+  isAdminLogin?: boolean;
+  signedInUser?: {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    role?: string;
+    iat?: number;
+    exp?: number;
+  } | null;
+};
+
+const Header = ({ isAdminLogin, signedInUser }: HeaderProps) => {
+  console.log("Header props:", { isAdminLogin, signedInUser });
   const [menuOpen, setMenuOpen] = useState(false);
   const [userData, setUserData] = useState<any>(null);
   const router = useRouter();
+  const { user, setUser } = useAuth();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const user = getUserToken();
-      setUserData(user);
-    } else {
-      setUserData(null);
-    }
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
+  const handleLogout = useCallback(async () => {
+    await fetch("/api/logout", {
+      method: "POST",
+    });
     setUserData(null);
-    router.push("/login");
-  };
+    router.replace("/login");
+    router.refresh();
+  }, []);
 
   const openMenu = () => {
     setMenuOpen(!menuOpen);
   };
-  console.log(menuOpen);
+  console.log("Header user:", user);
+  console.log(userData, "userData");
+
   return (
     <nav
       className="fixed top-0 left-0 w-full z-20 bg-opacity-70 py-4"
@@ -45,21 +54,26 @@ const Header = () => {
           </Link>
         </div>
         <div className={cn(s["Header__nav-links"])}>
-          <Link href="/about" className="text-white hover:text-gray-300">
-            About
-          </Link>
-          <Link href="/shop" className="text-white hover:text-gray-300">
-            Shop here
-          </Link>
-          <Link href="/myorders" className="text-white hover:text-gray-300">
-            My Orders
-          </Link>
-          {userData ? (
+          {userData?.role !== "admin" && (
+            <>
+              <Link href="/about" className="text-white hover:text-gray-300">
+                About
+              </Link>
+              <Link href="/shop" className="text-white hover:text-gray-300">
+                Shop here
+              </Link>
+              <Link href="/myorders" className="text-white hover:text-gray-300">
+                My Orders
+              </Link>
+            </>
+          )}
+
+          {signedInUser ? (
             <button
               onClick={handleLogout}
               className="text-white hover:text-gray-300"
             >
-              Logout
+              Welcome {signedInUser.firstName ?? "User"}
             </button>
           ) : (
             <Link href="/login" className="text-white hover:text-gray-300">

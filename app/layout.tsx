@@ -6,9 +6,10 @@ import Footer from "./components/footer/footer";
 import ProductContextProvider from "./context/productcontext";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
-
+import { AuthProvider } from "./context/authcontext";
+import { cookies } from "next/headers";
 const inter = Inter({ subsets: ["latin"] });
-
+import jwt, { JwtPayload } from "jsonwebtoken";
 export const metadata: Metadata = {
   title: "Relish Kashmir",
   description: "Essence Of Kashmir",
@@ -19,6 +20,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = cookies()?.get("token")?.value as string;
+  console.log("RootLayout cookieStore:", cookieStore);
+  const dec = jwt.decode(cookieStore);
+  console.log("RootLayout decoded token:", dec);
   return (
     <html lang="en" className={inter.className}>
       <head>
@@ -36,12 +41,14 @@ export default function RootLayout({
         />
       </head>
       <body style={{ backgroundColor: "#024950", color: "#E0E0E0" }}>
-        <ProductContextProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <Analytics />
-        </ProductContextProvider>
+        <AuthProvider>
+          <ProductContextProvider>
+            <Header signedInUser={dec} />
+            <main>{children}</main>
+            <Footer />
+            <Analytics />
+          </ProductContextProvider>
+        </AuthProvider>
 
         <Script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

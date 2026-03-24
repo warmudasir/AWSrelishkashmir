@@ -1,19 +1,15 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { MongoClient } from "mongodb";
-import { sendOrderConfirmationEmail } from '../../utility/email';
-const uri=process.env.MONGODB_URI;
+import { sendOrderConfirmationEmail } from "../../utility/email";
+import { dbConnection } from "@/lib/db";
+const uri = process.env.MONGODB_URI;
 
 export default async function orderHandler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
-  let client: MongoClient |null=null;
-
   try {
-    client = new MongoClient(uri as string);
-    await client.connect();
-    const db = client.db("relishKashmir");
-
+    const db = await dbConnection();
     if (req.method === "POST") {
       const {
         firstName,
@@ -28,8 +24,9 @@ export default async function orderHandler(
         productprice,
         imageUrl,
         orderStatus,
-        orderId
+        orderId,
       } = req.body;
+      console.log(req.body, "rebody");
 
       const collection = db.collection("orders");
       const itemsCollection = db.collection("items");
@@ -41,7 +38,7 @@ export default async function orderHandler(
       }
 
       const newQuantity = item.quantity - quantity;
-
+      console.log("one trig");
       if (newQuantity < 0) {
         return res.status(400).json({ message: "Insufficient stock" });
       }
@@ -66,16 +63,15 @@ export default async function orderHandler(
         productprice,
         imageUrl,
         orderStatus,
-        orderId
+        orderId,
       });
       await sendOrderConfirmationEmail(email, {
         productname,
         quantity,
-        orderStatus
+        orderStatus,
         // orderId,
         // paymentId,
       });
-
 
       res.status(200).json({ message: "Form submitted successfully", result });
     } else if (req.method === "PATCH") {
@@ -92,7 +88,7 @@ export default async function orderHandler(
       const collection = db.collection("orders");
       const result = await collection.updateOne(
         { orderId: orderId }, // Match by orderId field
-        { $set: { orderStatus } }
+        { $set: { orderStatus } },
       );
 
       if (result.modifiedCount === 0) {
@@ -107,9 +103,5 @@ export default async function orderHandler(
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
-  } finally {
-    if (client) {
-      await client.close();
-    }
   }
 }

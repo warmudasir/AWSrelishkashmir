@@ -2,8 +2,6 @@
 import { useEffect, useState } from "react";
 import { getUserToken } from "../../utility/authtoken";
 import { useRouter } from "next/navigation";
-import Header from "../components/header/header";
-import Footer from "../components/footer/footer";
 
 type userDataType = {
   firstName: string;
@@ -19,7 +17,7 @@ export default function Home() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [updatequantity, updateQuantity] = useState("");
+  const [updateQuantity, setUpdateQuantity] = useState("");
   const [productName, setProductName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -40,8 +38,8 @@ export default function Home() {
   const checkOrders = () => {
     router.push("/allorders");
   };
-
   const addquantity = async (e: React.FormEvent<HTMLFormElement>) => {
+    console.log(e, "q");
     e.preventDefault();
     try {
       const orderResponse = await fetch("/api/updatequantity", {
@@ -50,7 +48,7 @@ export default function Home() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          updatequantity,
+          updateQuantity,
           productName,
         }),
       });
@@ -105,7 +103,6 @@ export default function Home() {
 
   return (
     <div>
-      <Header />
       <div style={{ padding: "100px" }}>
         <div
           style={{
@@ -161,7 +158,10 @@ export default function Home() {
               style={{ width: "100%", marginBottom: "10px" }}
             />
             <br />
-            <input type="file" onChange={(e: any) => setFile(e.target.files[0])} />
+            <input
+              type="file"
+              onChange={(e: any) => setFile(e.target.files[0])}
+            />
             <br />
             <button
               type="submit"
@@ -206,8 +206,8 @@ export default function Home() {
             <input
               type="number"
               placeholder="Quantity"
-              value={updatequantity}
-              onChange={(e) => updateQuantity(e.target.value)}
+              value={updateQuantity}
+              onChange={(e) => setUpdateQuantity(e.target.value)}
               style={{ width: "100%", marginBottom: "10px" }}
             />
             <button
@@ -242,7 +242,6 @@ export default function Home() {
           </button>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

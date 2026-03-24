@@ -6,7 +6,9 @@ import React, { ReactNode, createContext, useState } from "react";
 type CartContextType = [number, () => void];
 
 // Create a context with the default value
-export const ProductContext = createContext<CartContextType | undefined>(undefined);
+export const ProductContext = createContext<CartContextType | undefined>(
+  undefined,
+);
 
 // Define the context provider component
 const ProductContextProvider = ({ children }: { children: ReactNode }) => {
@@ -14,7 +16,7 @@ const ProductContextProvider = ({ children }: { children: ReactNode }) => {
 
   // Function to increment the cart count
   const cartIncrement = () => {
-    updateCart(prevCart => prevCart + 1);
+    updateCart((prevCart) => prevCart + 1);
   };
 
   return (

@@ -4,26 +4,31 @@ import React, { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { getUserToken } from "../../utility/authtoken";
 import s from "./login.module.scss";
 import cn from "classnames";
+import { useAuth } from "../context/authcontext";
 
 interface IFormInput {
   email: string;
   password: string;
 }
-
-type decodedType = string | JwtPayload;
+export type userLoginType = {
+  email: string;
+  firstname: string;
+  lastname: string;
+  role: string;
+};
 
 const validateLogin = async (
   data: IFormInput,
   router: any,
-  setError: (message: string) => void
+  setError: (message: string) => void,
+  setUser: (user: userLoginType | null) => void,
 ) => {
-  const SECRET_KEY = "hello123";
   try {
-    const response = await fetch("/api/validateLogin", {
+    const response = await fetch("api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,16 +42,16 @@ const validateLogin = async (
 
     const result = await response.json();
     const { token } = result;
-    const decoded: decodedType = jwt.verify(token, SECRET_KEY);
-
+    const decoded: userLoginType = jwt.decode(token) as userLoginType;
     if (typeof decoded !== "string" && decoded.role) {
-      localStorage.setItem("token", token);
+      setUser(decoded);
       if (decoded.role === "admin") {
-        router.push("/admin");
+        router.replace("/admin");
       } else if (decoded.role === "user") {
-        router.push("/");
+        router.replace("/");
+        router.refresh();
       } else if (decoded.role === "deliveryagent") {
-        router.push("/deliveryagent");
+        router.replace("/deliveryagent");
       }
     } else {
       throw new Error("Invalid token payload");
@@ -58,6 +63,8 @@ const validateLogin = async (
 };
 
 const LoginPage: React.FC = () => {
+  const { user, setUser } = useAuth();
+  console.log("LoginPage user:", user);
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
@@ -73,7 +80,7 @@ const LoginPage: React.FC = () => {
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     setError(null); // Clear previous error messages
-    validateLogin(data, router, setError);
+    validateLogin(data, router, setError, setUser);
   };
 
   return (
