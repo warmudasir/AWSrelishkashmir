@@ -39,7 +39,6 @@ export default function Home() {
     router.push("/allorders");
   };
   const addquantity = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(e, "q");
     e.preventDefault();
     try {
       const orderResponse = await fetch("/api/updatequantity", {

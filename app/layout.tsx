@@ -29,7 +29,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const cookieStore = cookies()?.get("token")?.value as string;
-  console.log("RootLayout cookieStore:", cookieStore);
   const userInfo = jwt.decode(cookieStore) as User | null;
   return (
     <html lang="en" className={inter.className}>

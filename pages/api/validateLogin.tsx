@@ -10,7 +10,6 @@ export default async function loginHandler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const cookieStore = await cookies();
   if (req.method === "POST") {
     const { email, password } = req.body;
     const db = await dbConnection();

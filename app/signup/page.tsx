@@ -23,8 +23,6 @@ const SignupPage = () => {
     });
 
     const result = await response.json();
-    console.log(response);
-    console.log(result.message);
     if (response.ok) {
       router.push("/login");
     } else {
@@ -36,7 +34,10 @@ const SignupPage = () => {
     <div>
       <div className={styles.signupContainer}>
         <div className={styles.formWrapper}>
-          <form onSubmit={handleSubmit(orderInfo)} className={styles.signupForm}>
+          <form
+            onSubmit={handleSubmit(orderInfo)}
+            className={styles.signupForm}
+          >
             <input
               type="text"
               placeholder="First Name"

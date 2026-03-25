@@ -21,7 +21,6 @@ type HeaderProps = {
 };
 
 const Header = ({ isAdminLogin, signedInUser }: HeaderProps) => {
-  console.log("Header props:", { isAdminLogin, signedInUser });
   const [menuOpen, setMenuOpen] = useState(false);
   const [userData, setUserData] = useState<any>(null);
   const router = useRouter();
@@ -39,8 +38,6 @@ const Header = ({ isAdminLogin, signedInUser }: HeaderProps) => {
   const openMenu = () => {
     setMenuOpen(!menuOpen);
   };
-  console.log("Header user:", user);
-  console.log(userData, "userData");
 
   return (
     <nav
