@@ -14,6 +14,14 @@ export const metadata: Metadata = {
   title: "Relish Kashmir",
   description: "Essence Of Kashmir",
 };
+type User = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  iat: number;
+  exp: number;
+};
 
 export default function RootLayout({
   children,
@@ -22,8 +30,7 @@ export default function RootLayout({
 }>) {
   const cookieStore = cookies()?.get("token")?.value as string;
   console.log("RootLayout cookieStore:", cookieStore);
-  const dec = jwt.decode(cookieStore);
-  console.log("RootLayout decoded token:", dec);
+  const userInfo = jwt.decode(cookieStore) as User | null;
   return (
     <html lang="en" className={inter.className}>
       <head>
@@ -43,7 +50,7 @@ export default function RootLayout({
       <body style={{ backgroundColor: "#024950", color: "#E0E0E0" }}>
         <AuthProvider>
           <ProductContextProvider>
-            <Header signedInUser={dec} />
+            <Header signedInUser={userInfo} />
             <main>{children}</main>
             <Footer />
             <Analytics />
