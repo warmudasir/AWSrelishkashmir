@@ -35,14 +35,17 @@ const validateLogin = async (
       },
       body: JSON.stringify(data),
     });
-
+    console.log("Login API response:", response); // Log the entire response for debugging
     if (!response.ok) {
       throw new Error("Invalid login credentials");
     }
 
     const result = await response.json();
+    console.log("Login API result:", result); // Log the result for debugging
     const { token } = result;
+    console.log("Received token:", token); // Log the received token for debugging
     const decoded: userLoginType = jwt.decode(token) as userLoginType;
+    console.log(decoded, "decccc"); // Log the decoded token for debugging
     if (typeof decoded !== "string" && decoded.role) {
       setUser(decoded);
       if (decoded.role === "admin") {

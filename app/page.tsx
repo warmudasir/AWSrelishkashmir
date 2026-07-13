@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Products from "./components/products";
-import ImageCarousel from "./components/image-carousel/imageCarousel";
 import LogoGrid from "./logogrid/page";
 import cn from "classnames";
 import s from "./page.module.scss";
+import { getProducts } from "./services/products/getproducts";
+import { Product } from "./types/common";
 
-export default function Home() {
+export default async function Home() {
+  const products: Product[] = await getProducts();
   return (
     <>
       <div className="relative w-full h-screen">
@@ -54,7 +56,7 @@ export default function Home() {
           </span>
         </h2>
       </div>
-      <Products />
+      <Products products={products} />
       <LogoGrid />
     </>
   );

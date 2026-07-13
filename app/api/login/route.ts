@@ -1,45 +1,54 @@
-import { dbConnection } from "@/lib/db";
 import { NextRequest } from "next/server";
-const SECRET_KEY = "hello123";
+
 import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
+import { DynamoDBClient, GetItemCommand } from "@aws-sdk/client-dynamodb";
+import { unmarshall } from "@aws-sdk/util-dynamodb";
 
 export async function POST(req: NextRequest) {
+  const client = new DynamoDBClient({ region: process.env.AWS_REGION });
   const { email, password } = await req.json();
-  const db = await dbConnection();
-  try {
-    const collection = db.collection("users");
-    const user = await collection.findOne({ email });
-    if (!user) {
-      return new Response(JSON.stringify("Invalid email or password"), {
-        status: 401,
-      });
+  // Get user by email (partition key)
+  const command = new GetItemCommand({
+    TableName: "Users",
+    Key: {
+      email: { S: email }
     }
-    const isPasswordValid = bcrypt.compareSync(password, user.password);
-    if (!isPasswordValid) {
-      return new Response(JSON.stringify("Invalid email or password"), {
-        status: 401,
-      });
-    }
-
-    // Generate JWT token
-    const token = jwt.sign(
-      {
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        role: user.role, // Access the property directly
-      },
-      SECRET_KEY,
-      { expiresIn: "1h" },
+  });
+  const response = await client.send(command);
+  console.log("DynamoDB response:", response.Item); // Log the entire response for debugging
+  // User not found
+  if (!response.Item) {
+    return new Response(
+      JSON.stringify({ error: "User not found" }),
+      { status: 404 }
     );
-    cookies().set("token", token);
-    return new Response(JSON.stringify({ token }), { status: 200 });
-  } catch (error) {
-    console.error(error);
-    return new Response(JSON.stringify({ message: "Internal Server Error" }), {
-      status: 500,
-    });
   }
+  const user = unmarshall(response.Item);
+  // Check password
+  if (user.password !== password) {
+    return new Response(
+      JSON.stringify({ error: "Invalid password" }),
+      { status: 401 }
+    );
+  }
+
+  // Success — don't send password back!
+  const { password: _, ...safeUser } = user;
+  // Generate JWT token
+  const token = jwt.sign(
+    {
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role, // Access the property directly
+    },
+    process.env.SECRET_KEY || 'default-secret-key',
+    { expiresIn: "1h" },
+  );
+  cookies().set("token", token);
+  return new Response(
+    JSON.stringify({ message: "Login successful", user: safeUser, token: token }),
+    { status: 200 }
+  );
 }
