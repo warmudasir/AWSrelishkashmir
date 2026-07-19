@@ -88,35 +88,40 @@ const LoginPage: React.FC = () => {
 
   return (
     <>
-      <div className={s["LoginPage"]}>
-        <div className={s["LoginPage__form"]}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              style={{ width: "100%" }}
-              {...register("email", { required: true })}
-            />
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              style={{ width: "100%" }}
-              {...register("password", { required: true })}
-            />
-            <button
-              className={cn(s["LoginPage__form_button"], "my-2")}
-              type="submit"
-            >
-              Login
-            </button>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <p>
-              Don&apos;t have an account?{" "}
-              <Link href="/signup" style={{ color: "blue" }}>
-                Signup
-              </Link>
-            </p>
-          </form>
+      <div className={s["trial"]}>
+        <div style={{ backgroundColor: "#680101", flex: "1", display: "flex", justifyContent: "center", alignItems: "center", padding: "20px", textAlign: "center" }}>
+          <h1> Discover 100% natural, hand-sorted dry fruits and genuine Himalayan Shilajit by reaching out to local traders via Relish Kashmir</h1>
+        </div>
+        <div style={{ backgroundColor: "black", flex: "1", display: "flex" }}>
+          <div style={{ width: "300px", display: "flex", justifyContent: "center", alignItems: "center", margin: "auto" }}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                style={{ width: "100%" }}
+                {...register("email", { required: true })}
+              />
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                style={{ width: "100%" }}
+                {...register("password", { required: true })}
+              />
+              <button
+                className={cn(s["LoginPage__form_button"], "my-2")}
+                type="submit"
+              >
+                Login
+              </button>
+              {error && <p style={{ color: "red" }}>{error}</p>}
+              <p>
+                Don&apos;t have an account?{" "}
+                <Link href="/signup" style={{ color: "blue" }}>
+                  Signup
+                </Link>
+              </p>
+            </form>
+          </div>
         </div>
       </div>
     </>

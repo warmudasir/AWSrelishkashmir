@@ -41,8 +41,8 @@ const Header = ({ isAdminLogin, signedInUser }: HeaderProps) => {
 
   return (
     <nav
-      className="fixed top-0 left-0 w-full z-20 bg-opacity-70 py-4"
-      style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+      className="fixed top-0 left-0 w-full z-20 h-20 flex items-center justify-between px-4"
+      style={{ backgroundColor: "black", color: "white" }}
     >
       <div className="flex justify-between items-center w-full px-4">
         <div>

@@ -50,7 +50,7 @@ export default function RootLayout({
         <AuthProvider>
           <ProductContextProvider>
             <Header signedInUser={userInfo} />
-            <main>{children}</main>
+            <main style={{ paddingTop: "80px" }}>{children}</main>
             <Footer />
             <Analytics />
           </ProductContextProvider>
