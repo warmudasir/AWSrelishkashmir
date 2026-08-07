@@ -1,9 +1,7 @@
 "use client";
 
 import React from "react";
-import Footer from "@/app/components/footer/footer";
-import Header from "@/app/components/header/header";
-import styles from "./signup.module.scss";
+import s from "./signup.module.scss";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
@@ -31,56 +29,56 @@ const SignupPage = () => {
   };
 
   return (
-    <div>
-      <div className={styles.signupContainer}>
-        <div className={styles.formWrapper}>
-          <form
-            onSubmit={handleSubmit(orderInfo)}
-            className={styles.signupForm}
-          >
-            <input
-              type="text"
-              placeholder="First Name"
-              className={styles.input}
-              {...register("firstName")}
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              className={styles.input}
-              {...register("lastName")}
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              className={styles.input}
-              {...register("email")}
-            />
-            <input
-              type="text"
-              placeholder="Phone Number"
-              className={styles.input}
-              {...register("phone")}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              className={styles.input}
-              {...register("password")}
-            />
-            <button type="submit" className={styles.signupButton}>
-              Sign Up
-            </button>
-          </form>
-          <button
-            className={styles.loginRedirectButton}
-            onClick={() => router.push("/login")}
-          >
-            Already have an account? Login
-          </button>
+    <>
+      <div className={s["trial"]}>
+        <div style={{ backgroundColor: "black", flex: "1", display: "flex" }}>
+          <div style={{ width: "300px", display: "flex", justifyContent: "center", alignItems: "center", margin: "auto" }}>
+            <form
+              onSubmit={handleSubmit(orderInfo)}
+              className={s.signupForm}
+            >
+              <input
+                type="text"
+                placeholder="First Name"
+                className={s.input}
+                {...register("firstName")}
+              />
+              <input
+                type="text"
+                placeholder="Last Name"
+                className={s.input}
+                {...register("lastName")}
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                className={s.input}
+                {...register("email")}
+              />
+              <input
+                type="text"
+                placeholder="Phone Number"
+                className={s.input}
+                {...register("phone")}
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                className={s.input}
+                {...register("password")}
+              />
+              <button type="submit" className={s.signupButton}>
+                Sign Up
+              </button>
+            </form>
+          </div>
+        </div>
+        <div style={{ backgroundColor: "#680101", flex: "1", display: "flex", justifyContent: "center", alignItems: "center", padding: "20px", textAlign: "center" }}>
+          <h1>Bring home the warmth, aroma, and soul of Kashmir.<br />
+            <i>Sign up for exclusive flavors.</i></h1>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
