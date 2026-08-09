@@ -1,16 +1,12 @@
 import React from 'react';
 import s from './logogrid.module.scss';
 import Image from 'next/image';
-import spices from "../../public/spices.jpg"
 
 const LogoGrid = () => {
   return (
     <>
       <div className={s.heroBanner}>
-        <Image src={spices} alt='spices' />
-        <h2 className={s['LogoGrid__heading']}>
-          We&apos;re all about the culture and cuisine
-        </h2>
+        <h1>Servies 24x7</h1>
       </div>
       <div className={s['LogoGrid__container']}>
         <div className={s['LogoGrid__container_item']}>

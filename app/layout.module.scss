@@ -1,6 +1,13 @@
 .body {
-    background-color: #024950;
     color: #e0e0e0;
+    background:
+        radial-gradient(circle at 30% 55%,
+            rgba(124, 58, 237, 0.30),
+            transparent 35%),
+        radial-gradient(circle at 75% 45%,
+            rgba(37, 99, 235, 0.18),
+            transparent 35%),
+        #030305;
 }
 
 .main {

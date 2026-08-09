@@ -3,92 +3,102 @@
 
 /* Footer styles */
 .footerContainer {
-    background-color:$footer-background-color;
-    color: white;
-    padding: 20px 50px;
-  }
-  
-  .socialIcons {
-    display: flex;
-    justify-content: flex-end;
-    padding: 8px;
-  
-  }
-  
-  .socialIcons img {
-    margin: 0 10px;
-  }
-  
-  .horizontalLine {
-    display: flex;
-    justify-content: center;
-    padding: 10px;
-  }
-  
-  .horizontalLine hr {
-    border: solid 1px $secondary-color;
-    width: 95%;
-  }
-  
-  .footerSections {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 20px 0;
-  }
-  
+  // background-color:$footer-background-color;
+  background:
+    radial-gradient(circle at 30% 55%,
+      rgba(124, 58, 237, 0.30),
+      transparent 35%),
+    radial-gradient(circle at 75% 45%,
+      rgba(37, 99, 235, 0.18),
+      transparent 35%),
+    #030305;
+  color: white;
+  padding: 20px 50px;
+}
+
+.socialIcons {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px;
+
+}
+
+.socialIcons img {
+  margin: 0 10px;
+}
+
+.horizontalLine {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.horizontalLine hr {
+  border: solid 1px $secondary-color;
+  width: 95%;
+}
+
+.footerSections {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+
+.footerSections div {
+  flex: 1 1 calc(25% - 20px);
+  /* Four items per row */
+  margin: 10px;
+}
+
+.footerSections ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footerSections li {
+  margin-bottom: 20px;
+}
+
+.footerSections input[type="email"] {
+  width: 100%;
+  height: 40px;
+}
+
+.footerSections button {
+  background-color: $secondary-color;
+  color: white;
+  padding: 10px;
+  width: 100%;
+}
+
+.footerBottom {
+  text-align: center;
+  padding: 10px;
+}
+
+.footerBottom p {
+  margin: 0;
+}
+
+.footerBottom h1 {
+  margin: 0;
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) {
   .footerSections div {
-    flex: 1 1 calc(25% - 20px); /* Four items per row */
-    margin: 10px;
+    flex: 1 1 calc(50% - 20px);
+    /* Two items per row */
   }
-  
-  .footerSections ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .footerSections div {
+    flex: 1 1 100%;
+    /* One item per row */
+    margin: 10px 0;
   }
-  
-  .footerSections li {
-    margin-bottom: 20px;
-  }
-  
-  .footerSections input[type="email"] {
-    width: 100%;
-    height: 40px;
-  }
-  
-  .footerSections button {
-    background-color: $secondary-color;
-    color: white;
-    padding: 10px;
-    width: 100%;
-  }
-  
-  .footerBottom {
-    text-align: center;
-    padding: 10px;
-  }
-  
-  .footerBottom p {
-    margin: 0;
-  }
-  
-  .footerBottom h1 {
-    margin: 0;
-  }
-  
-  /* Tablet styles */
-  @media (max-width: 1024px) {
-    .footerSections div {
-      flex: 1 1 calc(50% - 20px); /* Two items per row */
-    }
-  }
-  
-  /* Mobile styles */
-  @media (max-width: 768px) {
-    .footerSections div {
-      flex: 1 1 100%; /* One item per row */
-      margin: 10px 0;
-    }
-  }
-  
+}

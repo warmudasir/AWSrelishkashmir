@@ -40,6 +40,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
           rel="stylesheet"
         />
+        <link href="https://fonts.googleapis.com/css2?family=Sekuya&display=swap" rel="stylesheet"></link>
       </head>
       <body className={s.body}>
         <AuthProvider>

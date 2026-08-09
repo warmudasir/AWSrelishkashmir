@@ -31,7 +31,7 @@ const Products = ({ products }: { products: Product[] }) => {
                 <ProductCard product={product} />
               ) : (
                 // <Link href={`/productdescription/${product.id}`} passHref>
-                <div className={styles.productLink}>
+                <div className={styles.productLink} >
                   <ProductCard product={product} selectProduct={selectProduct} />
                 </div>
                 // </Link>

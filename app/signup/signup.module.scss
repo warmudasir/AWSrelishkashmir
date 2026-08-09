@@ -97,7 +97,15 @@
 }
 
 .heroPanel {
-  background-color: #680101;
+  // background-color: #680101;
+  background:
+    radial-gradient(circle at 30% 15%,
+      rgba(124, 58, 237, 0.30),
+      transparent 35%),
+    radial-gradient(circle at 75% 95%,
+      rgba(37, 99, 235, 0.18),
+      transparent 35%),
+    #030305;
   flex: 1;
   display: flex;
   justify-content: center;
@@ -108,7 +116,15 @@
 }
 
 .formPanel {
-  background-color: black;
+  // background-color: black;
+  background:
+    radial-gradient(circle at 30% 15%,
+      rgba(124, 58, 237, 0.30),
+      transparent 35%),
+    radial-gradient(circle at 75% 95%,
+      rgba(37, 99, 235, 0.18),
+      transparent 35%),
+    #030305;
   flex: 1;
   display: flex;
 }

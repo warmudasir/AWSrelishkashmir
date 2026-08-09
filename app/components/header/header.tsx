@@ -38,7 +38,9 @@ const Header = ({ isAdminLogin, signedInUser }: HeaderProps) => {
       <div className="flex justify-between items-center w-full px-4">
         <div>
           <Link href={"/"}>
-            <h1 className="text-white">Relish Kashmir</h1>
+            <p className={s["Header"]}>
+              Relish Kashmir
+            </p>
           </Link>
         </div>
         <div className={cn(s["Header__nav-links"])}>

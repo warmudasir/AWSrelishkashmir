@@ -14,6 +14,14 @@
 }
 
 .Header {
+  font-family: Sekuya, system-ui;
+  font-size: 30px;
+  color: white;
+
+  @media screen and (max-width: 768px) {
+    font-size: 20px;
+  }
+
   &__nav-links {
     display: flex;
     gap: 24px;

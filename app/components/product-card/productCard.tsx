@@ -36,17 +36,24 @@ const ProductCard = ({ product, selectProduct }: { product: ProductProps; select
           <div>
             <span>
               <strong>{product.name}</strong>
-              <br />
-              *****
             </span>
           </div>
           <div>
-            <span>
-              <strong>Price:</strong> ₹
-              {product.price}
-            </span>
+
           </div>
         </div>
+        <div style={{ width: "100%", textAlign: "left" }}>
+          <span>
+            <p>Premium Kashmiri ab</p>
+          </span>
+        </div>
+        <div style={{ width: "100%", textAlign: "left" }}>
+          <span>
+            ₹
+            {product.price}
+          </span>
+        </div>
+
       </div>
     </button>
   );
