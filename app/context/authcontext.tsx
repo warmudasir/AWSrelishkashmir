@@ -1,17 +1,17 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
-import { userLoginType } from "../login/page";
+import { createContext, useContext, useState } from "react";
+import type { AuthUser } from "@/app/types/type";
 
 type AuthContextType = {
-  user: userLoginType | null;
-  setUser: (user: userLoginType | null) => void;
+  user: AuthUser | null;
+  setUser: (user: AuthUser | null) => void;
 };
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<userLoginType | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>

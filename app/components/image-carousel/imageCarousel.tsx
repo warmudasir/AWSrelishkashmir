@@ -35,10 +35,9 @@ const ImageCarousel = () => {
       {images.map((image, index) => (
         <div
           key={index}
-          className={`${styles.carouselImage} ${
-            index === currentIndex ? styles.active : ""
-          }`}
-          style={{ backgroundImage: `url(${image})` }}
+          className={`${styles.carouselImage} ${index === currentIndex ? styles.active : ""
+            }`}
+          style={{ ["--carousel-image" as string]: `url(${image})` }}
         />
       ))}
       <button className={styles.leftButton} onClick={goToPrevious}>

@@ -1,29 +1,18 @@
 "use client";
+import { createContext, useState } from "react";
+import type { Product } from "@/app/types/type";
 
-import React, { ReactNode, createContext, useState } from "react";
+type ProductContextType = {
+  selectedProduct: Product | null;
+  selectProduct: (product: Product | null) => void;
+};
 
-// Define the type for the context
-type CartContextType = [number, () => void];
-
-// Create a context with the default value
-export const ProductContext = createContext<CartContextType | undefined>(
-  undefined,
-);
-
-// Define the context provider component
-const ProductContextProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, updateCart] = useState<number>(0);
-
-  // Function to increment the cart count
-  const cartIncrement = () => {
-    updateCart((prevCart) => prevCart + 1);
-  };
-
+export const ProductContext = createContext<ProductContextType | null>(null);
+export default function ProductProvider({ children }: { children: React.ReactNode }) {
+  const [selectedProduct, selectProduct] = useState<Product | null>(null);
   return (
-    <ProductContext.Provider value={[cart, cartIncrement]}>
+    <ProductContext.Provider value={{ selectedProduct, selectProduct }}>
       {children}
     </ProductContext.Provider>
   );
-};
-
-export default ProductContextProvider;
+}

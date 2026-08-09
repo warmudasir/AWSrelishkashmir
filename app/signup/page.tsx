@@ -32,8 +32,8 @@ const SignupPage = () => {
   return (
     <>
       <div className={s["trial"]}>
-        <div style={{ backgroundColor: "black", flex: "1", display: "flex" }}>
-          <div style={{ width: "300px", display: "flex", justifyContent: "center", alignItems: "center", margin: "auto" }}>
+        <div className={s.formPanel}>
+          <div className={s.formWrapper}>
             <form
               onSubmit={handleSubmit(orderInfo)}
               className={s.signupForm}
@@ -74,7 +74,7 @@ const SignupPage = () => {
             </form>
           </div>
         </div>
-        <div style={{ backgroundColor: "#680101", flex: "1", display: "flex", justifyContent: "center", alignItems: "center", padding: "20px", textAlign: "center" }}>
+        <div className={s.heroPanel}>
           <h1>Bring home the warmth, aroma, and soul of Kashmir.<br />
             <i>Sign up for exclusive flavors.</i></h1>
         </div>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -7,24 +7,18 @@ import s from "./header.module.scss";
 import cn from "classnames";
 import barssolid from "../../../public/bars-solid.svg";
 import { useAuth } from "@/app/context/authcontext";
+import type { HeaderUserData } from "@/app/types/type";
 
 type HeaderProps = {
   isAdminLogin?: boolean;
-  signedInUser?: {
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-    role?: string;
-    iat?: number;
-    exp?: number;
-  } | null;
+  signedInUser?: HeaderUserData | null;
 };
 
 const Header = ({ isAdminLogin, signedInUser }: HeaderProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<HeaderUserData | null>(null);
   const router = useRouter();
-  const { user, setUser } = useAuth();
+  const { setUser } = useAuth();
 
   const handleLogout = useCallback(async () => {
     await fetch("/api/logout", {
@@ -40,10 +34,7 @@ const Header = ({ isAdminLogin, signedInUser }: HeaderProps) => {
   };
 
   return (
-    <nav
-      className="fixed top-0 left-0 w-full z-20 h-20 flex items-center justify-between px-4"
-      style={{ backgroundColor: "black", color: "white" }}
-    >
+    <nav className={`${s.headerNav}`}>
       <div className="flex justify-between items-center w-full px-4">
         <div>
           <Link href={"/"}>
@@ -87,14 +78,7 @@ const Header = ({ isAdminLogin, signedInUser }: HeaderProps) => {
       {menuOpen && (
         <>
           <hr />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: "10px ",
-            }}
-          >
+          <div className={s.mobileMenu}>
             <Link href="/about" className="text-white hover:text-gray-300">
               About
             </Link>

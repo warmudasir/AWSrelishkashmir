@@ -18,10 +18,53 @@
 .trial {
   display: flex;
   width: 100%;
-  height: 500px;
+  min-height: 500px;
 
   @media screen and (max-width: 768px) {
     flex-direction: column-reverse;
-    height: 800px !important;
+    min-height: 800px;
   }
+}
+
+.heroPanel {
+  background-color: #680101;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+  color: white;
+}
+
+.formPanel {
+  background-color: black;
+  flex: 1;
+  display: flex;
+}
+
+.formWrapper {
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.form {
+  width: 100%;
+  color: white;
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.errorText {
+  color: red;
+}
+
+.link {
+  color: blue;
 }

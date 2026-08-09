@@ -1,10 +1,6 @@
 import React from "react";
-
-interface QuantityProps {
-  quantity: number;
-  handleIncreaseQuantity: () => void;
-  handleDecreaseQuantity: () => void;
-}
+import type { QuantityProps } from "@/app/types/type";
+import s from "./quantity.module.scss";
 
 const Quantity = ({
   quantity,
@@ -12,43 +8,17 @@ const Quantity = ({
   handleDecreaseQuantity,
 }: QuantityProps) => {
   return (
-    <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
+    <div className={s.quantityControl}>
       <button
         onClick={handleDecreaseQuantity}
-        style={{
-          width: "30px",
-          height: "30px",
-          borderRadius: "50%",
-          border: "none",
-          backgroundColor: "#ccc",
-          color: "#fff",
-          fontSize: "16px",
-          cursor: "pointer",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginRight: "10px",
-        }}
+        className={`${s.quantityButton} ${s.quantityButtonMinus}`}
       >
         -
       </button>
-      <span style={{ margin: "0 10px", fontSize: "16px" }}>{quantity}</span>
+      <span className={s.quantityValue}>{quantity}</span>
       <button
         onClick={handleIncreaseQuantity}
-        style={{
-          width: "30px",
-          height: "30px",
-          borderRadius: "50%",
-          border: "none",
-          backgroundColor: "#ccc",
-          color: "#fff",
-          fontSize: "16px",
-          cursor: "pointer",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginLeft: "10px",
-        }}
+        className={`${s.quantityButton} ${s.quantityButtonPlus}`}
       >
         +
       </button>

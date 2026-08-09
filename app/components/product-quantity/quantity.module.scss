@@ -1,0 +1,32 @@
+.quantityControl {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.quantityButton {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background-color: #ccc;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quantityButtonMinus {
+    margin-right: 10px;
+}
+
+.quantityButtonPlus {
+    margin-left: 10px;
+}
+
+.quantityValue {
+    margin: 0 10px;
+    font-size: 16px;
+}

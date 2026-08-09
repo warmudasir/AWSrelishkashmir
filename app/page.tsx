@@ -4,19 +4,18 @@ import LogoGrid from "./logogrid/page";
 import cn from "classnames";
 import s from "./page.module.scss";
 import { getProducts } from "./services/products/getproducts";
-import { Product } from "./types/common";
+import type { Product } from "./types/common";
 
 export default async function Home() {
   const products: Product[] = await getProducts();
   return (
     <>
-      <div className="relative w-full h-screen">
+      <div className={s.heroSection}>
         <Image
           src="/main1.jpg"
           fill
-          style={{ objectFit: "cover" }}
           alt="Background Image"
-          className="z-0"
+          className={s.heroImage}
         />
         <div
           className={cn("z-10 center", s["Header__background-text-container"])}
@@ -33,27 +32,11 @@ export default async function Home() {
           </h3>
         </div>
       </div>
-      <div
-        style={{
-          textAlign: "center",
-          fontFamily: "sans-serif",
-          fontSize: "20px",
-        }}
-      >
-        Best of Jammu & Kashmir
-      </div>
-      <div
-        style={{
-          textAlign: "center",
-          fontFamily: "sans-serif",
-          fontSize: "20px",
-        }}
-      >
+      <div className={s.heroIntro}>Best of Jammu & Kashmir</div>
+      <div className={s.heroIntro}>
         <h2>
           Explore Collections{" "}
-          <span style={{ color: "red", textDecoration: "underline" }}>
-            Top Picks
-          </span>
+          <span className={s.highlightText}>Top Picks</span>
         </h2>
       </div>
       <Products products={products} />

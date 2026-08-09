@@ -1,14 +1,38 @@
+.headerNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 20;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  background-color: black;
+  color: white;
+}
+
 .Header {
   &__nav-links {
     display: flex;
     gap: 24px;
+
     @media screen and (max-width: 768px) {
-      display: none; // Hide navigation links on smaller screens
+      display: none;
     }
   }
+
   &__breadcrumb {
     @media screen and (min-width: 768px) {
       display: none;
     }
   }
+}
+
+.mobileMenu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
 }

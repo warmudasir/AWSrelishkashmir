@@ -3,22 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { getUserToken } from "../../utility/authtoken";
-
-interface Product {
-  email?:string;
-  _id: string;
-  id: number;
-  Name: string;
-  price?: string;
-  imageUrl: string;
-  productname: string;
-  quantity: number;
-  productprice: number;
-  orderStatus: string;
-}
+import type { OrderRecord } from "../types/type";
 
 const Products = () => {
-  const [orders, setOrders] = useState<Product[]>([]);
+  const [orders, setOrders] = useState<OrderRecord[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState<any>(null);
 
@@ -33,7 +21,7 @@ const Products = () => {
           if (!response.ok) {
             throw new Error('Failed to fetch orders');
           }
-          const result: Product[] = await response.json();
+          const result: OrderRecord[] = await response.json();
           const filteredOrders = result.filter((order) => user.email === order.email);
           setOrders(filteredOrders);
         } catch (error) {
@@ -71,9 +59,9 @@ const Products = () => {
             .slice() // Create a shallow copy of the array
             .reverse() // Reverse the array
             .map((order) => (
-              <div className="order-card" key={order._id}>
+              <div className="order-card" key={order.orderId || order.itemNumber}>
                 <Image
-                  src={order.imageUrl}
+                  src={order.imageUrl || "/RelishKashmir.png"}
                   alt="Product Image"
                   width={200}
                   height={200}
@@ -84,7 +72,7 @@ const Products = () => {
                   <h2>Order Details</h2>
                   <h3>Product Name: {order.productname}</h3>
                   <p>Total Quantity: {order.quantity}</p>
-                  <p>Total Payable: ₹{order.productprice * order.quantity}</p>
+                  <p>Total Payable: ₹{(order.productprice ?? 0) * (order.quantity ?? 0)}</p>
                   <p>Description: Healthy and pure saffron from Kashmir. Enjoy the best taste and aroma.</p>
                 </div>
                 <div className="order-status">

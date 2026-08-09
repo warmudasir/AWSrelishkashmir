@@ -8,78 +8,35 @@ import { getUserToken } from "@/utility/authtoken";
 import { ProductContext } from "@/app/context/productcontext";
 import s from "./page.module.scss";
 import Loading from "@/app/components/loading/loading";
-
-interface Product {
-  _id: string;
-  id: number;
-  name: string;
-  description: string;
-  price?: string;
-  imageUrl: string;
-  availableQuantity: number;
-  quantity: number; // Adding this field for quantity management
-}
-
-interface Order {
-  itemNumber: string;
-  email: string;
-}
-
-interface review {
-  comment: string;
-}
-interface Review {
-  review: review;
-  id: string; // Change to string to match product ID
-  comment: string;
-  nameofreviewer?: string;
-  userType?: string;
-}
+import type { Product, ReviewRecord } from "@/app/types/type";
 
 const ProductDescription = ({ params }: { params: { id: string } }) => {
-  const user = getUserToken();
   const { id } = params;
+  const user = getUserToken();
   const router = useRouter();
-  const context = useContext(ProductContext);
-
+  const { selectedProduct } = useContext(ProductContext) || {};
+  console.log(selectedProduct, "selected product in product description");
   // Ensure context is not undefined
-  if (!context) {
+  if (!selectedProduct) {
     throw new Error(
-      "ProductDescription must be used within a ProductContextProvider"
+      "Must Select a product before accessing the product description page."
     );
   }
 
-  const [cart, cartIncrement] = context;
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [maxQuantityReached, setMaxQuantityReached] = useState(false);
   const [typeuser, setTypeUser] = useState("");
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviews, setReviews] = useState<ReviewRecord[]>([]);
   const [newReview, setNewReview] = useState("");
-  let userType = "unverified";
-
   useEffect(() => {
-    const fetchProduct = async () => {
-      if (id) {
-        try {
-          const response = await fetch(`/api/data`);
-          if (!response.ok) {
-            throw new Error("Failed to fetch product");
-          }
-          const products: Product[] = await response.json();
-          const foundProduct = products.find((product) => product._id === id);
-          setProduct(foundProduct || null);
-        } catch (error) {
-          console.error("Error fetching product:", error);
-        } finally {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    fetchProduct();
-  }, [id]);
+    if (selectedProduct) {
+      setProduct(selectedProduct);
+      setIsLoading(false);
+    }
+  }, [selectedProduct]);
+  let userType = "unverified";
 
   useEffect(() => {
     const getReviews = async () => {
@@ -118,29 +75,12 @@ const ProductDescription = ({ params }: { params: { id: string } }) => {
     }
   };
 
-  const handleAddToCart = () => {
-    if (user) {
-      console.log(`Adding ${product?.name} to cart with quantity ${quantity}`);
-      const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
-      const newItem = { ...product, quantity };
-      localStorage.setItem("cart", JSON.stringify([...cartItems, newItem]));
-      cartIncrement(); // Increment the cart count
-    } else {
-      alert("Please login first to add items to the cart");
-    }
-  };
-
   const handleReviewSubmit = async () => {
     if (user) {
       if (!newReview) {
         alert("Please enter a comment.");
         return;
       }
-
-      const review: { id: string; comment: String } = {
-        id: id,
-        comment: newReview,
-      };
 
       try {
         const response = await fetch("/api/myorders");
@@ -163,7 +103,12 @@ const ProductDescription = ({ params }: { params: { id: string } }) => {
       //
       const nameofreviewer = user.firstName;
 
-      const reviewData = { review, id, nameofreviewer, userType };
+      const reviewData = {
+        review: { comment: newReview },
+        id,
+        nameofreviewer,
+        userType,
+      };
       const getReview = await fetch("/api/storeReview", {
         method: "POST",
         headers: {
@@ -219,9 +164,6 @@ const ProductDescription = ({ params }: { params: { id: string } }) => {
             <button onClick={buyprod} className={s["buy-now-button"]}>
               Buy Now
             </button>
-            {/* <button onClick={handleAddToCart} className="add-to-cart-button">
-              Add to Cart
-            </button> */}
           </div>
         </div>
       </div>

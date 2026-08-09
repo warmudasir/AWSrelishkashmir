@@ -9,23 +9,13 @@ import { getUserToken } from "../../utility/authtoken";
 import s from "./login.module.scss";
 import cn from "classnames";
 import { useAuth } from "../context/authcontext";
-
-interface IFormInput {
-  email: string;
-  password: string;
-}
-export type userLoginType = {
-  email: string;
-  firstname: string;
-  lastname: string;
-  role: string;
-};
+import type { AuthUser, LoginFormValues } from "@/app/types/type";
 
 const validateLogin = async (
-  data: IFormInput,
+  data: LoginFormValues,
   router: any,
   setError: (message: string) => void,
-  setUser: (user: userLoginType | null) => void,
+  setUser: (user: AuthUser | null) => void,
 ) => {
   console.log(data, "data incoming")
   try {
@@ -45,7 +35,7 @@ const validateLogin = async (
     console.log("Login API result:", result); // Log the result for debugging
     const { token } = result;
     console.log("Received token:", token); // Log the received token for debugging
-    const decoded: userLoginType = jwt.decode(token) as userLoginType;
+    const decoded: AuthUser = jwt.decode(token) as AuthUser;
     console.log(decoded, "decccc"); // Log the decoded token for debugging
     if (typeof decoded !== "string" && decoded.role) {
       setUser(decoded);
@@ -80,9 +70,9 @@ const LoginPage: React.FC = () => {
     }
   }, [router]);
 
-  const { register, handleSubmit } = useForm<IFormInput>();
+  const { register, handleSubmit } = useForm<LoginFormValues>();
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
     setError(null); // Clear previous error messages
     validateLogin(data, router, setError, setUser);
   };
@@ -90,22 +80,22 @@ const LoginPage: React.FC = () => {
   return (
     <>
       <div className={s["trial"]}>
-        <div style={{ backgroundColor: "#680101", flex: "1", display: "flex", justifyContent: "center", alignItems: "center", padding: "20px", textAlign: "center" }}>
+        <div className={s.heroPanel}>
           <h1> Discover 100% natural, hand-sorted dry fruits and genuine Himalayan Shilajit by reaching out to local traders via Relish Kashmir</h1>
         </div>
-        <div style={{ backgroundColor: "black", flex: "1", display: "flex" }}>
-          <div style={{ width: "300px", display: "flex", justifyContent: "center", alignItems: "center", margin: "auto" }}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={s.formPanel}>
+          <div className={s.formWrapper}>
+            <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
               <label htmlFor="email">Email</label>
               <input
                 type="email"
-                style={{ width: "100%" }}
+                className={s.input}
                 {...register("email", { required: true })}
               />
               <label htmlFor="password">Password</label>
               <input
                 type="password"
-                style={{ width: "100%" }}
+                className={s.input}
                 {...register("password", { required: true })}
               />
               <button
@@ -114,10 +104,10 @@ const LoginPage: React.FC = () => {
               >
                 Login
               </button>
-              {error && <p style={{ color: "red" }}>{error}</p>}
+              {error && <p className={s.errorText}>{error}</p>}
               <p>
                 Don&apos;t have an account?{" "}
-                <Link href="/signup" style={{ color: "blue" }}>
+                <Link href="/signup" className={s.link}>
                   Signup
                 </Link>
               </p>

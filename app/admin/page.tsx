@@ -2,13 +2,8 @@
 import { useEffect, useState } from "react";
 import { getUserToken } from "../../utility/authtoken";
 import { useRouter } from "next/navigation";
-
-type userDataType = {
-  firstName: string;
-  email: string;
-  lastname: string;
-  role: string;
-};
+import type { UserDataType } from "../types/type";
+import s from "./admin.module.scss";
 
 export default function Home() {
   const router = useRouter();
@@ -21,7 +16,7 @@ export default function Home() {
   const [productName, setProductName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [userData, setUserData] = useState<userDataType | null>(null);
+  const [userData, setUserData] = useState<UserDataType | null>(null);
 
   useEffect(() => {
     const userData = getUserToken();
@@ -102,43 +97,24 @@ export default function Home() {
 
   return (
     <div>
-      <div style={{ padding: "100px" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "50px",
-            marginBottom: "50px",
-          }}
-        >
-          <form
-            onSubmit={handleSubmit}
-            style={{
-              backgroundColor: "#f8f8f8",
-              padding: "20px",
-              borderRadius: "8px",
-              flex: "1",
-            }}
-          >
-            <h2>Add New Product</h2>
-            {errorMessage && (
-              <div style={{ color: "red", marginBottom: "10px" }}>
-                {errorMessage}
-              </div>
-            )}
+      <div className={s.pageWrapper}>
+        <div className={s.dashboardLayout}>
+          <form onSubmit={handleSubmit} className={s.panel}>
+            <h2 className={s.panelTitle}>Add New Product</h2>
+            {errorMessage && <div className={s.errorMessage}>{errorMessage}</div>}
             <input
               type="text"
               placeholder="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              style={{ width: "100%", marginBottom: "10px" }}
+              className={s.input}
             />
             <br />
             <textarea
               placeholder="Description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              style={{ width: "100%", marginBottom: "10px" }}
+              className={s.textarea}
             />
             <br />
             <input
@@ -146,7 +122,7 @@ export default function Home() {
               placeholder="Price"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              style={{ width: "100%", marginBottom: "10px" }}
+              className={s.input}
             />
             <br />
             <input
@@ -154,44 +130,26 @@ export default function Home() {
               placeholder="Quantity"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
-              style={{ width: "100%", marginBottom: "10px" }}
+              className={s.input}
             />
             <br />
             <input
               type="file"
               onChange={(e: any) => setFile(e.target.files[0])}
+              className={s.uploadInput}
             />
             <br />
-            <button
-              type="submit"
-              style={{
-                marginTop: "10px",
-                padding: "10px 20px",
-                backgroundColor: "#007bff",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
-            >
+            <button type="submit" className={s.submitButton}>
               Submit Product
             </button>
             {imageUrl && (
-              <div style={{ marginTop: "20px" }}>
+              <div className={s.imagePreview}>
                 <img src={imageUrl} alt="Uploaded image" />
               </div>
             )}
           </form>
 
-          <form
-            onSubmit={addquantity}
-            style={{
-              backgroundColor: "#f8f8f8",
-              padding: "20px",
-              borderRadius: "8px",
-              flex: "1",
-            }}
-          >
+          <form onSubmit={addquantity} className={s.panel}>
             <h2>Update Product Quantity</h2>
             <label htmlFor="product-name">Product Name</label>
             <input
@@ -199,7 +157,7 @@ export default function Home() {
               placeholder="Product Name"
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
-              style={{ width: "100%", marginBottom: "10px" }}
+              className={s.input}
             />
             <label htmlFor="quantity">Quantity</label>
             <input
@@ -207,36 +165,16 @@ export default function Home() {
               placeholder="Quantity"
               value={updateQuantity}
               onChange={(e) => setUpdateQuantity(e.target.value)}
-              style={{ width: "100%", marginBottom: "10px" }}
+              className={s.input}
             />
-            <button
-              type="submit"
-              style={{
-                padding: "10px 20px",
-                backgroundColor: "#007bff",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
-            >
+            <button type="submit" className={s.submitButton}>
               Update Quantity
             </button>
           </form>
         </div>
 
-        <div style={{ textAlign: "center" }}>
-          <button
-            onClick={checkOrders}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#28a745",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
-          >
+        <div className={s.actions}>
+          <button onClick={checkOrders} className={s.orderButton}>
             All Orders
           </button>
         </div>

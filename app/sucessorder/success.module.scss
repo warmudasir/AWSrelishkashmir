@@ -1,0 +1,52 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 24px;
+}
+
+.card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+}
+
+.title {
+    color: #28a745;
+    margin-bottom: 20px;
+}
+
+.message {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-around;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.primaryButton,
+.secondaryButton {
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.primaryButton {
+    background-color: #007bff;
+}
+
+.secondaryButton {
+    background-color: #28a745;
+}

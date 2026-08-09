@@ -6,27 +6,11 @@ import Footer from "../components/footer/footer";
 import Image from "next/image";
 import { getUserToken } from "../../utility/authtoken";
 import { useRouter } from "next/navigation";
-
-interface Product {
-  _id: string;
-  id: number;
-  Name: string;
-  price?: string;
-  imageUrl: string;
-  productname: string;
-  quantity: number;
-  productprice: number;
-  firstName: string;
-  address: string;
-  pincode: string;
-  phone: string;
-  orderStatus: string;
-  orderId: string; // Ensure orderId is part of the interface
-}
+import type { OrderRecord } from "../types/type";
 
 const Products = () => {
   const router = useRouter();
-  const [orders, setOrders] = useState<Product[]>([]);
+  const [orders, setOrders] = useState<OrderRecord[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [statusUpdate, setStatusUpdate] = useState<Record<string, string>>({});
   const [userData, setUserData] = useState<any>(null);
@@ -119,7 +103,7 @@ const Products = () => {
             .map((order) => (
               <div className="order-card" key={order.orderId}>
                 <Image
-                  src={order.imageUrl}
+                  src={order.imageUrl || "/RelishKashmir.png"}
                   alt="Product Image"
                   width={200}
                   height={200}
@@ -130,8 +114,8 @@ const Products = () => {
                   <h2>Order Details</h2>
                   <h3>Product Name: {order.productname}</h3>
                   <p>Total Quantity: {order.quantity}</p>
-                  <p>Unit Price: ₹{order.productprice}</p>
-                  <p>Total Order Price: ₹{order.productprice * order.quantity}</p>
+                  <p>Unit Price: ₹{order.productprice ?? 0}</p>
+                  <p>Total Order Price: ₹{(order.productprice ?? 0) * (order.quantity ?? 0)}</p>
 
                   <h2>Address Details</h2>
                   <p>Name: {order.firstName}</p>
@@ -147,9 +131,9 @@ const Products = () => {
                   ) : (
                     <>
                       <select
-                        value={statusUpdate[order.orderId] || order.orderStatus}
+                        value={order.orderId ? statusUpdate[order.orderId] || order.orderStatus : order.orderStatus}
                         onChange={(e) =>
-                          handleStatusChange(order.orderId, e.target.value)
+                          handleStatusChange(order.orderId || "", e.target.value)
                         }
                       >
                         <option value="Item Dispatched">Item Dispatched</option>
@@ -160,7 +144,7 @@ const Products = () => {
                         </option>
                       </select>
                       {order.orderStatus !== "Delivered" && (
-                        <button onClick={() => handleStatusSubmit(order.orderId)}>
+                        <button onClick={() => handleStatusSubmit(order.orderId || "")}>
                           Submit
                         </button>
                       )}

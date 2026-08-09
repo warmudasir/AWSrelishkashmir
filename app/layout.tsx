@@ -9,18 +9,13 @@ import { Analytics } from "@vercel/analytics/react";
 import { AuthProvider } from "./context/authcontext";
 import { cookies } from "next/headers";
 const inter = Inter({ subsets: ["latin"] });
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+import ProductProvider from "./context/productcontext";
+import type { AuthUser } from "./types/type";
+import s from "./layout.module.scss";
 export const metadata: Metadata = {
   title: "Relish Kashmir",
   description: "Essence Of Kashmir",
-};
-type User = {
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: string;
-  iat: number;
-  exp: number;
 };
 
 export default function RootLayout({
@@ -29,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const cookieStore = cookies()?.get("token")?.value as string;
-  const userInfo = jwt.decode(cookieStore) as User | null;
+  const userInfo = jwt.decode(cookieStore) as AuthUser | null;
   return (
     <html lang="en" className={inter.className}>
       <head>
@@ -46,12 +41,14 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body style={{ backgroundColor: "#024950", color: "#E0E0E0" }}>
+      <body className={s.body}>
         <AuthProvider>
           <ProductContextProvider>
-            <Header signedInUser={userInfo} />
-            <main style={{ paddingTop: "80px" }}>{children}</main>
-            <Footer />
+            <ProductProvider>
+              <Header signedInUser={userInfo} />
+              <main className={s.main}>{children}</main>
+              <Footer />
+            </ProductProvider>
             <Analytics />
           </ProductContextProvider>
         </AuthProvider>
