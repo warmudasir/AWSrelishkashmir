@@ -11,8 +11,9 @@ const SignupPage = () => {
   const { register, handleSubmit } = useForm();
 
   const orderInfo = async (data: any) => {
+    console.log(data, "data incoming from signup");
     data.role = "user";
-    const response = await fetch("/api/users", {
+    const response = await fetch("/api/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

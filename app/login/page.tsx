@@ -27,6 +27,7 @@ const validateLogin = async (
   setError: (message: string) => void,
   setUser: (user: userLoginType | null) => void,
 ) => {
+  console.log(data, "data incoming")
   try {
     const response = await fetch("api/login", {
       method: "POST",
