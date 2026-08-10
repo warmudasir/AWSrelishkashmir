@@ -11,12 +11,6 @@ export default async function Home() {
   return (
     <>
       <div className={s.heroSection}>
-        {/* <Image
-          src="/main1.jpg"
-          fill
-          alt="Background Image"
-          className={s.heroImage}
-        /> */}
         <div
           className={cn("z-10 center", s["Header__background-text-container"])}
         >
@@ -31,7 +25,7 @@ export default async function Home() {
             Purity you can taste, tradition you can trust
           </p>
           <div style={{ display: "flex", justifyContent: "center", marginTop: "50px", }}>
-            <a href="#collections" className={s["Header__background-text-container_link"]}>
+            <a href="#collections" >
               Explore Our Collections
             </a>
           </div>

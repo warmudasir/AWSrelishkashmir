@@ -44,7 +44,7 @@ const ProductCard = ({ product, selectProduct }: { product: ProductProps; select
         </div>
         <div style={{ width: "100%", textAlign: "left" }}>
           <span>
-            <p>Premium Kashmiri ab</p>
+            <p>Premium Kashmiri Apples</p>
           </span>
         </div>
         <div style={{ width: "100%", textAlign: "left" }}>

@@ -6,7 +6,10 @@ const LogoGrid = () => {
   return (
     <>
       <div className={s.heroBanner}>
-        <h1>Servies 24x7</h1>
+        <div style={{ textAlign: 'center', color: 'white', marginTop: '20px', fontFamily: 'Sekuya', fontSize: '30px' }}>
+          <p>WHY RELISH KASHMIR?</p>
+          <p>Pure Products. Trusted Quality</p>
+        </div>
       </div>
       <div className={s['LogoGrid__container']}>
         <div className={s['LogoGrid__container_item']}>

@@ -72,7 +72,7 @@ const Footer = () => {
       </div>
       <div className={styles.footerBottom}>
         <p>Proprietor: Shayeeb Mohammad War</p>
-        <h1>&copy; All rights reserved 2023-24</h1>
+        <p style={{ fontFamily: 'Sekuya', fontSize: '30px' }}>&copy; All rights reserved 2023-24</p>
         <br />
       </div>
     </div>
