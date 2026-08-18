@@ -33,10 +33,10 @@ export default async function Home() {
       </div>
       <div className={s.heroIntro}>Best of Jammu & Kashmir</div>
       <div className={s.heroIntro}>
-        <h2>
+        <h4>
           Explore Collections{" "}
           <span className={s.highlightText}>Top Picks</span>
-        </h2>
+        </h4>
       </div>
       <Products products={products} />
       <LogoGrid />

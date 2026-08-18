@@ -123,6 +123,7 @@ const Page = ({ params }: { params: { id: string } }) => {
               )}
               className={styles.form}
             >
+              {/* <h1>Please</h1> */}
               <input
                 type="tel"
                 placeholder="Phone Number"
@@ -170,6 +171,7 @@ const Page = ({ params }: { params: { id: string } }) => {
         ) : (
           <div className={styles.formWrapper}>
             <form onSubmit={handleSubmit(orderInfo)} className={styles.form}>
+              <h4 style={{ color: 'white' }}>Please provide your details to proceed with the payment</h4>
               <input
                 type="text"
                 placeholder="First Name"
@@ -256,19 +258,21 @@ const Page = ({ params }: { params: { id: string } }) => {
             </form>
           </div>
         )}
-        <div className={styles.sidebar}>
-          <h2 className={styles.sidebarTitle}>Your Order</h2>
-          <div className={styles.productDetails}>
-            <img src={imageUrl} alt={name} className={styles.productImage} />
-            <div className={styles.productInfo}>
-              <h3 className={styles.productName}>{name}</h3>
-              <p className={styles.productPrice}>Price: ₹{totalpayable}</p>
-              <p className={styles.productQuantity}>Quantity: {quantity}</p>
+        <div style={{ display: "flex", height: "100%" }}>
+          <div className={styles.sidebar}>
+            <h2 className={styles.sidebarTitle}>Your Order</h2>
+            <div className={styles.productDetails}>
+              <img src={imageUrl} alt={name} className={styles.productImage} />
+              <div className={styles.productInfo}>
+                <h3 className={styles.productName}>{name}</h3>
+                <p className={styles.productPrice}>Price: ₹{totalpayable}</p>
+                <p className={styles.productQuantity}>Quantity: {quantity}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

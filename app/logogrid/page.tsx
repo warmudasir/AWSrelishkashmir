@@ -6,7 +6,7 @@ const LogoGrid = () => {
   return (
     <>
       <div className={s.heroBanner}>
-        <div style={{ textAlign: 'center', color: 'white', marginTop: '20px', fontFamily: 'Sekuya', fontSize: '30px' }}>
+        <div style={{ textAlign: 'center', color: 'white', marginTop: '20px', fontFamily: 'Sekuya', fontSize: '25px' }}>
           <p>WHY RELISH KASHMIR?</p>
           <p>Pure Products. Trusted Quality</p>
         </div>
